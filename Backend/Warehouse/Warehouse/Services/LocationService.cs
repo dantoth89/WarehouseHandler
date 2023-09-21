@@ -1,31 +1,76 @@
-﻿using Warehouse.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Warehouse.Data;
+using Warehouse.Models.Entities;
 
-namespace Warehouse.Services;
-
-public class LocationService : ILocationService
+namespace Warehouse.Services
 {
-    public Task<Location> GetLocation(long locationId)
+    public class LocationService : ILocationService
     {
-        throw new NotImplementedException();
-    }
+        private readonly WarehouseContext _warehouseContext;
 
-    public Task<List<Location>> GetAllLocations()
-    {
-        throw new NotImplementedException();
-    }
+        public LocationService(WarehouseContext warehouseContext)
+        {
+            _warehouseContext = warehouseContext;
+        }
 
-    public Task AddLocation(Location location)
-    {
-        throw new NotImplementedException();
-    }
+        public async Task<Location> GetLocation(long locationId)
+        {
+            var location = await _warehouseContext.Locations
+                .FirstOrDefaultAsync(l => l.LocationId == locationId);
 
-    public Task UpdateLocation(Location location, long id)
-    {
-        throw new NotImplementedException();
-    }
+            if (location == null)
+            {
+                throw new ArgumentException($"Location with Id {locationId} does not exist");
+            }
 
-    public Task DeleteLocation(long id)
-    {
-        throw new NotImplementedException();
+            return location;
+        }
+
+        public async Task<List<Location>> GetAllLocations()
+        {
+            var locations = await _warehouseContext.Locations.ToListAsync();
+            return locations;
+        }
+
+        public async Task AddLocation(Location location)
+        {
+            _warehouseContext.Locations.Add(location);
+            await _warehouseContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateLocation(Location updatedLocation, long id)
+        {
+            var locationToUpdate = await _warehouseContext.Locations
+                .FirstOrDefaultAsync(l => l.LocationId == id);
+
+            if (locationToUpdate == null)
+            {
+                throw new ArgumentException($"Location with Id {id} does not exist");
+            }
+
+            locationToUpdate.Aisle = updatedLocation.Aisle;
+            locationToUpdate.Shelf = updatedLocation.Shelf;
+            locationToUpdate.Bin = updatedLocation.Bin;
+
+            await _warehouseContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteLocation(long id)
+        {
+            var locationToDelete = await _warehouseContext.Locations
+                .FirstOrDefaultAsync(l => l.LocationId == id);
+
+            if (locationToDelete == null)
+            {
+                throw new ArgumentException($"Location with Id {id} does not exist");
+            }
+
+            _warehouseContext.Locations.Remove(locationToDelete);
+            await _warehouseContext.SaveChangesAsync();
+        }
     }
 }

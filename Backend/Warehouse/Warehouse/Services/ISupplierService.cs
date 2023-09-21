@@ -4,7 +4,7 @@ namespace Warehouse.Services;
 
 public interface ISupplierService
 {
-    Task<Supplier> GetUser(long supplierId);
+    Task<Supplier> GetSupplier(long supplierId);
     
     Task<List<Supplier>> GetAllSuppliers();
     
