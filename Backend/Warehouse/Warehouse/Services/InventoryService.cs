@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Warehouse.Data;
 using Warehouse.Models.Entities;
 
@@ -20,7 +16,7 @@ namespace Warehouse.Services
         public async Task<Inventory> GetInventory(long inventoryId)
         {
             var inventory = await _warehouseContext.Inventories
-                .Include(i => i.Product) // Include related Product data if needed
+                .Include(i => i.Product)
                 .FirstOrDefaultAsync(i => i.InventoryId == inventoryId);
 
             if (inventory == null)

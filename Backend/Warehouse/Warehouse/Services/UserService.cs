@@ -1,8 +1,6 @@
-﻿using Azure.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Warehouse.Data;
 using Warehouse.Models.Entities;
-using Warehouse.Models.Enums;
 
 namespace Warehouse.Services;
 

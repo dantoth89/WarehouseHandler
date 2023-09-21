@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Warehouse.Data;
 using Warehouse.Models.Entities;
 
@@ -53,11 +49,10 @@ namespace Warehouse.Services
                 throw new ArgumentException($"Product with Id {id} does not exist");
             }
 
-            // Update product properties based on the provided 'updatedProduct' object.
             productToUpdate.Name = updatedProduct.Name;
             productToUpdate.SKU = updatedProduct.SKU;
             productToUpdate.Description = updatedProduct.Description;
-            productToUpdate.SupplierId = updatedProduct.SupplierId; // Update Supplier if needed
+            productToUpdate.SupplierId = updatedProduct.SupplierId;
 
             await _warehouseContext.SaveChangesAsync();
         }
