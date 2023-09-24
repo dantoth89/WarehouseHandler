@@ -27,7 +27,7 @@ namespace Warehouse.Services
             return inventory;
         }
 
-        public async Task<List<Inventory>> GetAllInventorys()
+        public async Task<List<Inventory>> GetAllInventories()
         {
             var inventories = await _warehouseContext.Inventories
                 .Include(i => i.Product) 

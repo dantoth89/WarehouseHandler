@@ -44,11 +44,11 @@ public class InventoryController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllInventorys()
+    public async Task<IActionResult> GetAllInventories()
     {
         try
         {
-            var inventories = await _inventoryService.GetAllInventorys();
+            var inventories = await _inventoryService.GetAllInventories();
             return Ok(inventories);
         }
         catch (Exception ex)

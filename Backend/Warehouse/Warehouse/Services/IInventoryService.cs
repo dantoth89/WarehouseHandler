@@ -6,7 +6,7 @@ public interface IInventoryService
 {
     Task<Inventory> GetInventory(long inventoryId);
     
-    Task<List<Inventory>> GetAllInventorys();
+    Task<List<Inventory>> GetAllInventories();
     
     Task AddInventory(Inventory inventory);
     
