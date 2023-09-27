@@ -16,7 +16,6 @@ public class User
     public string Username { get; set; }
     
     [Required]
-    [NotMapped]
     public string Password { get; set; }
     
     [Required]

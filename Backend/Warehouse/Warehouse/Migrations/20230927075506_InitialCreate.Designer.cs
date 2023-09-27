@@ -11,7 +11,7 @@ using Warehouse.Data;
 namespace Warehouse.Migrations
 {
     [DbContext(typeof(WarehouseContext))]
-    [Migration("20230920090032_InitialCreate")]
+    [Migration("20230927075506_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -37,10 +37,8 @@ namespace Warehouse.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -49,6 +47,8 @@ namespace Warehouse.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("InventoryId");
+
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("ProductId");
 
@@ -157,6 +157,10 @@ namespace Warehouse.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
@@ -172,11 +176,19 @@ namespace Warehouse.Migrations
 
             modelBuilder.Entity("Warehouse.Models.Entities.Inventory", b =>
                 {
+                    b.HasOne("Warehouse.Models.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Warehouse.Models.Entities.Product", "Product")
                         .WithMany("Inventories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Location");
 
                     b.Navigation("Product");
                 });

@@ -53,7 +53,7 @@ namespace Warehouse.Services
             }
 
             inventoryToUpdate.ProductId = updatedInventory.ProductId;
-            inventoryToUpdate.Location = updatedInventory.Location;
+            inventoryToUpdate.LocationId = updatedInventory.LocationId;
             inventoryToUpdate.Quantity = updatedInventory.Quantity;
             inventoryToUpdate.BatchNumber = updatedInventory.BatchNumber;
 

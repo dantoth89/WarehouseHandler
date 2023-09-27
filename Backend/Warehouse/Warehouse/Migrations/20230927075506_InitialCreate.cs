@@ -48,6 +48,7 @@ namespace Warehouse.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -84,7 +85,7 @@ namespace Warehouse.Migrations
                     InventoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     BatchNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
@@ -92,12 +93,23 @@ namespace Warehouse.Migrations
                 {
                     table.PrimaryKey("PK_Inventories", x => x.InventoryId);
                     table.ForeignKey(
+                        name: "FK_Inventories_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Inventories_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inventories_LocationId",
+                table: "Inventories",
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventories_ProductId",
@@ -117,10 +129,10 @@ namespace Warehouse.Migrations
                 name: "Inventories");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Products");
