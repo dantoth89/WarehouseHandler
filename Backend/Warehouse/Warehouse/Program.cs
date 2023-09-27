@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<WarehouseContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConfiguration"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WarehouseDb"));
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
