@@ -1,10 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Warehouse.Data;
-using Warehouse.Models.Entities;
-using Warehouse.Models.Enums;
-using Warehouse.Services;
-
-
 namespace UserTest
 {
     [TestFixture]
@@ -26,6 +19,7 @@ namespace UserTest
             _userService = new UserService(_warehouseContext);
         }
 
+        
         [Test]
         public async Task TestNotNull()
         {
@@ -82,7 +76,7 @@ namespace UserTest
                 await _userService.AddUser(user);
 
                 var retrievedUser = _warehouseContext.Users.FirstOrDefault(u => u.Username == user.Username);
-                var retrievedUserToChk = await _userService.GetUser(retrievedUser.UserId);
+                var retrievedUserToChk = await _userService.GetUser(retrievedUser.Id);
 
                 Assert.NotNull(retrievedUserToChk);
                 Assert.AreEqual(user.Username, retrievedUserToChk.Username);
@@ -125,9 +119,9 @@ namespace UserTest
                 await _userService.AddUser(user);
 
                 var retrievedUser = _warehouseContext.Users.FirstOrDefault(u => u.Username == user.Username);
-                await _userService.UpdateUser(userUpdate, retrievedUser.UserId);
+                await _userService.UpdateUser(userUpdate, retrievedUser.Id);
                 
-                var retrievedUserToChk = await _userService.GetUser(retrievedUser.UserId);
+                var retrievedUserToChk = await _userService.GetUser(retrievedUser.Id);
 
                 Assert.NotNull(retrievedUserToChk);
                 Assert.AreEqual(userUpdate.Username, retrievedUserToChk.Username);
@@ -163,15 +157,15 @@ namespace UserTest
                 await _userService.AddUser(user);
 
                 var retrievedUser = _warehouseContext.Users.FirstOrDefault(u => u.Username == user.Username);
-                var retrievedUserToChk = await _userService.GetUser(retrievedUser.UserId);
+                var retrievedUserToChk = await _userService.GetUser(retrievedUser.Id);
 
                 Assert.NotNull(retrievedUserToChk);
                 Assert.AreEqual(user.Username, retrievedUserToChk.Username);
                 Assert.AreEqual(user.Role, retrievedUserToChk.Role);
 
-                await _userService.DeleteUser(retrievedUser.UserId);
+                await _userService.DeleteUser(retrievedUser.Id);
                 
-                var deletedUser = await _warehouseContext.Users.FirstOrDefaultAsync(u => u.UserId == user.UserId);
+                var deletedUser = await _warehouseContext.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
                 
                 Assert.Null(deletedUser);
                 

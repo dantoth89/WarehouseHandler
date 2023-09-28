@@ -1,16 +1,22 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CCodecool_005CMisc_005CWarehouseHandler_005CBackend_005CWarehouse_005CWarehouse_002Esln/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CCodecool_005CMisc_005CWarehouseHandler_005CBackend_005CWarehouse_005CWarehouse_005CProgram_002Ecs/@EntryIndexedValue">True</s:Boolean>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=072fef30_002Da5c8_002D4f82_002Da802_002Db6841f3daaec/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddUserTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=072fef30_002Da5c8_002D4f82_002Da802_002Db6841f3daaec/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::UserTest.UserTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::ProductTest.ProductTest.UpdateProductTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::SupplierTest.SupplierTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::LocationTest.LocationTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::ProductTest.ProductTest.GetProductTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::ProductTest.ProductTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4b576d71_002D98d3_002D464d_002Dad26_002D29b89a20ccc2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CanAddAndRetrieveProduct #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4b576d71_002D98d3_002D464d_002Dad26_002D29b89a20ccc2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CanAddAndRetrieveProduct #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::UserTest.UserTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::ProductTest.ProductTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::SupplierTest.SupplierTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::19D195F7-9A2C-4BEB-981D-0F8C07A9872D::net7.0::LocationTest.LocationTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/SpawnedProcessesKnownList/=sqlservr_002Eexe/@EntryIndexedValue">KillOrphaned</s:String>

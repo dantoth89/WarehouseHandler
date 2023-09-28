@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Warehouse.Data;
-using Warehouse.Models.Entities;
-using Warehouse.Services;
-
-namespace LocationTest
+﻿namespace LocationTest
 {
     [TestFixture]
     public class LocationTest
@@ -39,7 +34,7 @@ namespace LocationTest
 
                 var addedLocation = _warehouseContext.Locations.FirstOrDefault(l => l.Aisle == location.Aisle);
 
-                var retrievedLocation = await _locationService.GetLocation(addedLocation.LocationId);
+                var retrievedLocation = await _locationService.GetLocation(addedLocation.Id);
 
                 Assert.NotNull(retrievedLocation);
                 Assert.AreEqual(location.Aisle, retrievedLocation.Aisle);
@@ -118,9 +113,9 @@ namespace LocationTest
 
                 var addedLocation = _warehouseContext.Locations.FirstOrDefault(l => l.Aisle == location.Aisle);
 
-                await _locationService.UpdateLocation(updatedLocation, addedLocation.LocationId);
+                await _locationService.UpdateLocation(updatedLocation, addedLocation.Id);
 
-                var retrievedLocation = await _locationService.GetLocation(addedLocation.LocationId);
+                var retrievedLocation = await _locationService.GetLocation(addedLocation.Id);
 
                 Assert.NotNull(retrievedLocation);
                 Assert.AreEqual(updatedLocation.Aisle, retrievedLocation.Aisle);
@@ -157,16 +152,16 @@ namespace LocationTest
 
                 var addedLocation = _warehouseContext.Locations.FirstOrDefault(l => l.Aisle == location.Aisle);
 
-                var retrievedLocation = await _locationService.GetLocation(addedLocation.LocationId);
+                var retrievedLocation = await _locationService.GetLocation(addedLocation.Id);
 
                 Assert.NotNull(retrievedLocation);
                 Assert.AreEqual(location.Aisle, retrievedLocation.Aisle);
                 Assert.AreEqual(location.Shelf, retrievedLocation.Shelf);
                 Assert.AreEqual(location.Bin, retrievedLocation.Bin);
 
-                await _locationService.DeleteLocation(addedLocation.LocationId);
+                await _locationService.DeleteLocation(addedLocation.Id);
 
-                var deletedLocation = await _warehouseContext.Locations.FirstOrDefaultAsync(l => l.LocationId == addedLocation.LocationId);
+                var deletedLocation = await _warehouseContext.Locations.FirstOrDefaultAsync(l => l.Id == addedLocation.Id);
 
                 Assert.Null(deletedLocation);
             }

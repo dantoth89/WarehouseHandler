@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Warehouse.Data;
-using Warehouse.Models.Entities;
-using Warehouse.Services;
-
-namespace SupplierTest
+﻿namespace SupplierTest
 {
     [TestFixture]
     public class SupplierTest
@@ -15,7 +10,8 @@ namespace SupplierTest
         public void Setup()
         {
             var optionsBuilder = new DbContextOptionsBuilder<WarehouseContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Trusted_Connection=True;Initial Catalog=WarehouseDb;");
+            optionsBuilder.UseSqlServer(
+                "Server=(localdb)\\mssqllocaldb;Trusted_Connection=True;Initial Catalog=WarehouseDb;");
             var dbContextOptions = optionsBuilder.Options;
 
             _warehouseContext = new WarehouseContext(dbContextOptions);
@@ -40,7 +36,7 @@ namespace SupplierTest
 
                 var addedSupplier = _warehouseContext.Suppliers.FirstOrDefault(s => s.Name == supplier.Name);
 
-                var retrievedSupplier = await _supplierService.GetSupplier(addedSupplier.SupplierId);
+                var retrievedSupplier = await _supplierService.GetSupplier(addedSupplier.Id);
 
                 Assert.NotNull(retrievedSupplier);
                 Assert.AreEqual(supplier.Name, retrievedSupplier.Name);
@@ -124,9 +120,9 @@ namespace SupplierTest
 
                 var addedSupplier = _warehouseContext.Suppliers.FirstOrDefault(s => s.Name == supplier.Name);
 
-                await _supplierService.UpdateSupplier(updatedSupplier, addedSupplier.SupplierId);
+                await _supplierService.UpdateSupplier(updatedSupplier, addedSupplier.Id);
 
-                var retrievedSupplier = await _supplierService.GetSupplier(addedSupplier.SupplierId);
+                var retrievedSupplier = await _supplierService.GetSupplier(addedSupplier.Id);
 
                 Assert.NotNull(retrievedSupplier);
                 Assert.AreEqual(updatedSupplier.Name, retrievedSupplier.Name);
@@ -159,38 +155,23 @@ namespace SupplierTest
                 ContactEmail = "test@example.com"
             };
 
-            try
-            {
-                await _supplierService.AddSupplier(supplier);
+            await _supplierService.AddSupplier(supplier);
 
-                var addedSupplier = _warehouseContext.Suppliers.FirstOrDefault(s => s.Name == supplier.Name);
+            var addedSupplier = _warehouseContext.Suppliers.FirstOrDefault(s => s.Name == supplier.Name);
 
-                var retrievedSupplier = await _supplierService.GetSupplier(addedSupplier.SupplierId);
+            var retrievedSupplier = await _supplierService.GetSupplier(addedSupplier.Id);
 
-                Assert.NotNull(retrievedSupplier);
-                Assert.AreEqual(supplier.Name, retrievedSupplier.Name);
-                Assert.AreEqual(supplier.Description, retrievedSupplier.Description);
-                Assert.AreEqual(supplier.ContactPhone, retrievedSupplier.ContactPhone);
-                Assert.AreEqual(supplier.ContactEmail, retrievedSupplier.ContactEmail);
+            Assert.NotNull(retrievedSupplier);
+            Assert.AreEqual(supplier.Name, retrievedSupplier.Name);
+            Assert.AreEqual(supplier.Description, retrievedSupplier.Description);
+            Assert.AreEqual(supplier.ContactPhone, retrievedSupplier.ContactPhone);
+            Assert.AreEqual(supplier.ContactEmail, retrievedSupplier.ContactEmail);
 
-                await _supplierService.DeleteSupplier(addedSupplier.SupplierId);
+            await _supplierService.DeleteSupplier(addedSupplier.Id);
 
-                var deletedSupplier = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.SupplierId == addedSupplier.SupplierId);
-
-                Assert.Null(deletedSupplier);
-            }
-            finally
-            {
-                if (supplier != null)
-                {
-                    var supplierToDelete = _warehouseContext.Suppliers.FirstOrDefault(s => s.Name == supplier.Name);
-                    if (supplierToDelete != null)
-                    {
-                        _warehouseContext.Suppliers.Remove(supplierToDelete);
-                        await _warehouseContext.SaveChangesAsync();
-                    }
-                }
-            }
+            var deletedSupplier =
+                await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == addedSupplier.Id);
+            Assert.Null(deletedSupplier);
         }
     }
 }
