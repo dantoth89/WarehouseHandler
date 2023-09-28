@@ -7,24 +7,16 @@ namespace Warehouse.Models.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int InventoryId { get; set; }
-
-        [Required]
+        public int Id { get; set; }
+        
         [ForeignKey("Product")]
         public int ProductId { get; set; }
-    
+        
         public Product Product { get; set; }
 
-        [Required]
-        [ForeignKey("Location")] 
-        public int LocationId { get; set; }
-
-        public Location Location { get; set; }
-
-        [Required]
+        public List<Location> Locations { get; set; }
         public int Quantity { get; set; }
 
-        [MaxLength(50)]
         public string BatchNumber { get; set; }
     }
 }

@@ -15,7 +15,7 @@ public class SupplierService : ISupplierService
     
     public async Task<Supplier> GetSupplier(long supplierId)
     {
-        var supplier = _warehouseContext.Suppliers.FirstOrDefault(s => s.SupplierId == supplierId);
+        var supplier = _warehouseContext.Suppliers.FirstOrDefault(s => s.Id == supplierId);
 
         if (supplier == null)
         {
@@ -34,40 +34,30 @@ public class SupplierService : ISupplierService
 
     public async Task AddSupplier(Supplier supplier)
     {
-        var supplierToAdd = new Supplier() 
-        {
-            Name = supplier.Name,
-            Description = supplier.Description,
-            ContactPhone = supplier.ContactPhone,
-            ContactEmail = supplier.ContactEmail,
-            Products = supplier.Products
-
-        };
-        _warehouseContext.Suppliers.Add(supplierToAdd);
+        _warehouseContext.Suppliers.Add(supplier);
         await _warehouseContext.SaveChangesAsync();
     }
 
     public async Task UpdateSupplier(Supplier supplier, long id)
     {
-        var supplierToUpdate = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.SupplierId == id);
+        var supplierToUpdate = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == id);
 
         if (supplierToUpdate == null)
         {
             throw new ArgumentException($"Supplier with Id {id} does not exist");
         }
-        
+
         supplierToUpdate.Name = supplier.Name;
         supplierToUpdate.Description = supplier.Description;
         supplierToUpdate.ContactPhone = supplier.ContactPhone;
         supplierToUpdate.ContactEmail = supplier.ContactEmail;
-        supplierToUpdate.Products = supplier.Products;
 
         await _warehouseContext.SaveChangesAsync();
     }
 
     public async Task DeleteSupplier(long id)
     {
-        var supplierToDelete = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.SupplierId == id);
+        var supplierToDelete = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == id);
 
         if (supplierToDelete == null)
         {

@@ -12,12 +12,11 @@ namespace Warehouse.Services
         {
             _warehouseContext = warehouseContext;
         }
-
+        
         public async Task<Product> GetProduct(long productId)
         {
             var product = await _warehouseContext.Products
-                .Include(p => p.Supplier) 
-                .FirstOrDefaultAsync(p => p.ProductId == productId);
+                .FirstOrDefaultAsync(p => p.Id == productId);
 
             if (product == null)
             {
@@ -29,20 +28,28 @@ namespace Warehouse.Services
 
         public async Task<List<Product>> GetAllProducts()
         {
-            var products = await _warehouseContext.Products.Include(p => p.Supplier).ToListAsync();
+            var products = await _warehouseContext.Products.ToListAsync();
 
             return products;
         }
 
         public async Task AddProduct(Product product)
         {
-            _warehouseContext.Products.Add(product);
+            var productToAdd = new Product
+            {
+                Name = product.Name,
+                Id = product.Id,
+                Description = product.Description,
+                SKU = product.SKU,
+            };
+            
+            _warehouseContext.Products.Add(productToAdd);
             await _warehouseContext.SaveChangesAsync();
         }
 
         public async Task UpdateProduct(Product updatedProduct, long id)
         {
-            var productToUpdate = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+            var productToUpdate = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
 
             if (productToUpdate == null)
             {
@@ -52,14 +59,13 @@ namespace Warehouse.Services
             productToUpdate.Name = updatedProduct.Name;
             productToUpdate.SKU = updatedProduct.SKU;
             productToUpdate.Description = updatedProduct.Description;
-            productToUpdate.SupplierId = updatedProduct.SupplierId;
 
             await _warehouseContext.SaveChangesAsync();
         }
 
         public async Task DeleteProduct(long id)
         {
-            var productToDelete = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+            var productToDelete = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
 
             if (productToDelete == null)
             {

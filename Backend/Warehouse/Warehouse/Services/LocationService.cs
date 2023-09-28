@@ -16,7 +16,7 @@ namespace Warehouse.Services
         public async Task<Location> GetLocation(long locationId)
         {
             var location = await _warehouseContext.Locations
-                .FirstOrDefaultAsync(l => l.LocationId == locationId);
+                .FirstOrDefaultAsync(l => l.Id == locationId);
 
             if (location == null)
             {
@@ -41,7 +41,7 @@ namespace Warehouse.Services
         public async Task UpdateLocation(Location updatedLocation, long id)
         {
             var locationToUpdate = await _warehouseContext.Locations
-                .FirstOrDefaultAsync(l => l.LocationId == id);
+                .FirstOrDefaultAsync(l => l.Id == id);
 
             if (locationToUpdate == null)
             {
@@ -58,7 +58,7 @@ namespace Warehouse.Services
         public async Task DeleteLocation(long id)
         {
             var locationToDelete = await _warehouseContext.Locations
-                .FirstOrDefaultAsync(l => l.LocationId == id);
+                .FirstOrDefaultAsync(l => l.Id == id);
 
             if (locationToDelete == null)
             {
