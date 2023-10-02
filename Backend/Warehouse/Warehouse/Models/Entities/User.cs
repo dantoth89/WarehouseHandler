@@ -16,6 +16,9 @@ public class User
     public string Username { get; set; }
     
     [Required]
+    public byte[] Salt { get; set; }
+    
+    [Required]
     public string Password { get; set; }
     
     [Required]
