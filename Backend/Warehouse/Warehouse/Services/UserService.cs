@@ -9,6 +9,7 @@ namespace Warehouse.Services;
 public class UserService : IUserService
 {
     private readonly WarehouseContext _warehouseContext;
+    private readonly Random rnd = new Random();
 
     public UserService(WarehouseContext warehouseContext)
     {
@@ -35,12 +36,18 @@ public class UserService : IUserService
 
     public async Task AddUser(User user)
     {
+        byte[] salt = GenerateSalt();
+
+        string hashedPassword = Hash(user.Password, salt);
+
         var userToAdd = new User
         {
             Username = user.Username,
-            Password = user.Password,
+            Password = hashedPassword,
+            Salt = salt,
             Role = user.Role
         };
+
         _warehouseContext.Users.Add(userToAdd);
         await _warehouseContext.SaveChangesAsync();
     }
@@ -75,33 +82,56 @@ public class UserService : IUserService
         await _warehouseContext.SaveChangesAsync();
     }
 
-    // public static string HashPassword(string password, out string salt)
-    // {
-    //     using (var rng = new RNGCryptoServiceProvider())
-    //     {
-    //         byte[] saltBytes = new byte[16]; // Generate a 16-byte random salt
-    //         rng.GetBytes(saltBytes);
-    //
-    //         salt = Convert.ToBase64String(saltBytes);
-    //
-    //         using (var sha256 = SHA256.Create())
-    //         {
-    //             byte[] saltedPasswordBytes = Encoding.UTF8.GetBytes(password + salt);
-    //             byte[] hashedBytes = sha256.ComputeHash(saltedPasswordBytes);
-    //             return Convert.ToBase64String(hashedBytes);
-    //         }
-    //     }
-    // }
-    //
-    // public static bool VerifyPassword(string enteredPassword, string hashedPassword, string salt)
-    // {
-    //     using (var sha256 = SHA256.Create())
-    //     {
-    //         byte[] saltedEnteredPasswordBytes = Encoding.UTF8.GetBytes(enteredPassword + salt);
-    //         byte[] hashedEnteredBytes = sha256.ComputeHash(saltedEnteredPasswordBytes);
-    //         string hashedEnteredPassword = Convert.ToBase64String(hashedEnteredBytes);
-    //         return string.Equals(hashedEnteredPassword, hashedPassword);
-    //     }
-    // }
-    //
+    public byte[] GenerateSalt()
+    {
+        byte[] salt = new byte[16];
+        rnd.NextBytes(salt);
+        return salt;
+    }
+
+    public string Hash(string password, byte[] salt)
+    {
+        SHA256 hash = SHA256.Create();
+
+        var passwordBytes = Encoding.Default.GetBytes(password + salt);
+
+        var hashedPass = hash.ComputeHash(passwordBytes);
+
+        return Convert.ToHexString(hashedPass);
+    }
+
+    public bool CheckPassword(string enteredPassword, User user)
+    {
+        SHA256 hash = SHA256.Create();
+        var passwordBytes = Encoding.Default.GetBytes(enteredPassword + user.Salt);
+        var hashedPass = hash.ComputeHash(passwordBytes);
+        var passFromUser = Convert.ToHexString(hashedPass);
+        return string.Equals(passFromUser, user.Password);
+    }
+
+    public async Task<string> Login(string username, string password)
+    {
+        var user = _warehouseContext.Users.FirstOrDefault(u => u.Username == username);
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        bool isPasswordValid = CheckPassword(password, user);
+        
+        if (!isPasswordValid)
+        {
+            return null;
+        }
+        
+        string secretKey = Environment.GetEnvironmentVariable("SECRET_KEY");
+        string issuer = "WHBack";
+        string audience = "WHFront";
+        
+        var jwtService = new JwtService(secretKey, issuer, audience);
+        string token = jwtService.GenerateToken(user);
+
+        return token;
+    }
 }
