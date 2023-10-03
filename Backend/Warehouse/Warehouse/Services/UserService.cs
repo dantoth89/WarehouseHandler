@@ -3,6 +3,7 @@ using Warehouse.Data;
 using Warehouse.Models.Entities;
 using System.Security.Cryptography;
 using System.Text;
+using Warehouse.Models.DTO;
 
 namespace Warehouse.Services;
 
@@ -28,13 +29,19 @@ public class UserService : IUserService
         return user;
     }
 
+    public async Task<User> GetUserByUsername(string name)
+    {
+        var user = _warehouseContext.Users.FirstOrDefault(u => u.Username == name);
+        return user;
+    }
+
     public async Task<List<User>> GetAllUsers()
     {
         var users = _warehouseContext.Users.ToList();
         return users;
     }
 
-    public async Task AddUser(User user)
+    public async Task AddUser(UserDto user)
     {
         byte[] salt = GenerateSalt();
 
@@ -126,8 +133,8 @@ public class UserService : IUserService
         }
         
         string secretKey = Environment.GetEnvironmentVariable("SECRET_KEY");
-        string issuer = "WHBack";
-        string audience = "WHFront";
+        string issuer = "http://localhost:5213";
+        string audience = "http://localhost:5173/";
         
         var jwtService = new JwtService(secretKey, issuer, audience);
         string token = jwtService.GenerateToken(user);
