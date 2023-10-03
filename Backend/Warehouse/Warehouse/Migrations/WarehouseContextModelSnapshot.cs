@@ -161,6 +161,10 @@ namespace Warehouse.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(255)

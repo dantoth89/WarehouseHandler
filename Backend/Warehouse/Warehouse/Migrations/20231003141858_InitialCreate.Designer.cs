@@ -12,7 +12,7 @@ using Warehouse.Data;
 namespace Warehouse.Migrations
 {
     [DbContext(typeof(WarehouseContext))]
-    [Migration("20230928150342_InitialCreate")]
+    [Migration("20231003141858_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -163,6 +163,10 @@ namespace Warehouse.Migrations
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
