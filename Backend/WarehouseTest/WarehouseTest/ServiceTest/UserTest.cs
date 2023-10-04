@@ -1,3 +1,5 @@
+using Warehouse.Models.DTO;
+
 namespace UserTest
 {
     [TestFixture]
@@ -30,7 +32,7 @@ namespace UserTest
         [Test]
         public async Task AddUserTest()
         {
-            var user = new User
+            var user = new UserDto
             {
                 Username = "John Doe",
                 Password = "laterNeedToBeHashed",
@@ -64,7 +66,7 @@ namespace UserTest
         [Test]
         public async Task GetUserTest()
         {
-            var user = new User
+            var user = new UserDto()
             {
                 Username = "John Doe",
                 Password = "laterNeedToBeHashed",
@@ -100,14 +102,14 @@ namespace UserTest
         [Test]
         public async Task UpdateUserTest()
         {
-            var user = new User
+            var user = new UserDto()
             {
                 Username = "John Doe",
                 Password = "laterNeedToBeHashed",
                 Role = Role.Worker
             };
             
-            var userUpdate = new User
+            var userUpdate = new User()
             {
                 Username = "Jane Doe",
                 Password = "laterRealyNeedToBeHashed",
@@ -145,7 +147,7 @@ namespace UserTest
         [Test]
         public async Task DeleteUserTest()
         {
-            var user = new User
+            var user = new UserDto()
             {
                 Username = "John Doe",
                 Password = "laterNeedToBeHashed",
@@ -165,7 +167,7 @@ namespace UserTest
 
                 await _userService.DeleteUser(retrievedUser.Id);
                 
-                var deletedUser = await _warehouseContext.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+                var deletedUser = await _warehouseContext.Users.FirstOrDefaultAsync(u => u.Username == user.Username);
                 
                 Assert.Null(deletedUser);
                 
