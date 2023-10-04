@@ -15,7 +15,7 @@ public interface IUserService
     
     Task AddUser(UserDto user);
     
-    Task UpdateUser(User user, long id);
+    Task UpdateUser(UserDto user, long id);
     
     Task DeleteUser(long id);
 }

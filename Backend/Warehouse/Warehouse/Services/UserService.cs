@@ -59,7 +59,7 @@ public class UserService : IUserService
         await _warehouseContext.SaveChangesAsync();
     }
 
-    public async Task UpdateUser(User updatedUser, long id)
+    public async Task UpdateUser(UserDto updatedUser, long id)
     {
         var userToUpdate = await _warehouseContext.Users.FirstOrDefaultAsync(u => u.Id == id);
 
