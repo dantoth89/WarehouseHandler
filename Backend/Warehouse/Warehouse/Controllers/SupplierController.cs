@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Warehouse.Services;
 using Warehouse.Models.Entities;
 
 namespace Warehouse.Controllers;
 
-
+[Authorize]
 [ApiController, Route("[controller]")]
 public class SupplierController : ControllerBase
 {

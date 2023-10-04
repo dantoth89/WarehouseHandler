@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Warehouse.Models.DTO;
 using Warehouse.Services;
 using Warehouse.Models.Entities;
 
 namespace Warehouse.Controllers;
-
 
 [ApiController, Route("[controller]")]
 public class UserController : ControllerBase
@@ -14,14 +15,31 @@ public class UserController : ControllerBase
     {
         _userService = userService;
     }
-    
-   [HttpPost]
-    public async Task<IActionResult> AddUser([FromBody] User user)
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserDto user)
     {
+        if (user == null)
+        {
+            return BadRequest("Invalid input. Please provide registration data.");
+        }
+
+        if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Password))
+        {
+            return BadRequest("Username and password are required.");
+        }
+
+        var existingUser = await _userService.GetUserByUsername(user.Username);
+
+        if (existingUser != null)
+        {
+            return BadRequest("Username is already in use. Please choose another.");
+        }
+
         try
         {
             await _userService.AddUser(user);
-            return Ok();
+            return Ok("Registration successful!");
         }
         catch (Exception ex)
         {
@@ -29,6 +47,39 @@ public class UserController : ControllerBase
         }
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] Login user)
+    {
+        if (user == null)
+        {
+            return BadRequest("Invalid input.");
+        }
+
+        if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Password))
+        {
+            return BadRequest("Username and password are required.");
+        }
+
+        try
+        {
+            var jwtToken = _userService.Login(user.Username, user.Password);
+
+            return Ok(jwtToken);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("test")]
+    public async Task<IActionResult> AuthTest()
+    {
+        return Ok("Auth test ok");
+    }
+
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUser(long id)
     {
@@ -43,6 +94,7 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
@@ -57,8 +109,9 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUser([FromBody] User user, long id)
+    public async Task<IActionResult> UpdateUser([FromBody] UserDto user, long id)
     {
         try
         {
@@ -71,6 +124,7 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(long id)
     {
