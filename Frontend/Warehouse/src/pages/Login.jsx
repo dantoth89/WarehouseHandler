@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-//import '../css/Login.css';
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
   const [loginData, setLoginData] = useState({
@@ -9,7 +8,7 @@ function Login() {
     password: ''
   });
 
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,20 +20,18 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch('http://localhost:5213/user/login', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:5213/user/login', loginData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(snippetData),
       });
-      console.info(snippetData);
 
-      if (response.ok) {
-        setIsSuccessPopupOpen(true); 
-        console.info('Ok');
+      if (response.data.result != null) {
+        console.info('Login successful');
+        const token = response.data.result;
+        localStorage.setItem('jwtToken', token);
+        navigate('/products')
       } else {
         console.error('Login error');
       }
@@ -43,12 +40,10 @@ function Login() {
     }
   };
 
-
-
   return (
     <div className="loginContainer">
-              <h2 className="titles">Login</h2>
-              <form onSubmit={handleSubmit}>
+      <h2 className="titles">Login</h2>
+      <form onSubmit={handleSubmit}>
         <div className="snippetInfo">
           <label htmlFor="name">User name:</label>
           <input
@@ -61,14 +56,14 @@ function Login() {
         <div className="snippetInfo">
           <label htmlFor="language">Password:</label>
           <input
-            type="text"
+            type="password"
             name="password"
             value={loginData.password}
             onChange={handleInputChange}
           />
-        </div>       
-          <button className="btn" type="submit">Login</button>         
-      </form>     
+        </div>
+        <button className="btn" type="submit">Login</button>
+      </form>
     </div>
   );
 }
