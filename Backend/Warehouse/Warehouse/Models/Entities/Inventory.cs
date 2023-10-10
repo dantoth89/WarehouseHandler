@@ -14,9 +14,7 @@ namespace Warehouse.Models.Entities
         
         public Product Product { get; set; }
 
-        public List<Location> Locations { get; set; }
+        public string Location { get; set; }
         public int Quantity { get; set; }
-
-        public string BatchNumber { get; set; }
     }
 }

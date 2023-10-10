@@ -18,5 +18,8 @@ public class Product
     [MaxLength(1000)]
     public string Description { get; set; }
     
-    public List<Supplier> Suppliers { get; set; }
+    [ForeignKey("Supplier")]
+    public int SupplierId { get; set; }
+    
+    public Supplier Supplier { get; set; }
 }
