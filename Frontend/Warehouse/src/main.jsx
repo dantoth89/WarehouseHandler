@@ -8,6 +8,7 @@ import ProductList from './pages/ProductList.jsx'
 import Navbar from "./pages/Navbar.jsx";
 import SupplierList from "./pages/SupplierList.jsx"
 import LocationList from "./pages/LocationList.jsx";
+import UpdateProduct from "./pages/UpdateProduct.jsx";
 
 
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/locations",
     element: <LocationList />,
+  },
+  {
+    path: "/updateproduct/:id",
+    element: <UpdateProduct />,
   },
 ],
 );
