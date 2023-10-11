@@ -42,7 +42,7 @@ function SupplierList() {
     const deleteSupplier = (id) => {
         const token = localStorage.getItem('jwtToken');
 
-        fetch(`http://localhost:5213/product/${id}`, {
+        fetch(`http://localhost:5213/supplier/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function SupplierList() {
                         prevSuppliers.filter((supplier) => supplier.id !== id)
                     );
                 } else {
-                    console.error('Failed to delete product. Status:', res.status);
+                    console.error('Failed to delete supplier. Status:', res.status);
                 }
             })
             .catch((error) => {
