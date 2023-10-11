@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Warehouse.Data;
+using Warehouse.Models.DTO;
 using Warehouse.Models.Entities;
 
 namespace Warehouse.Services
@@ -29,25 +30,30 @@ namespace Warehouse.Services
         public async Task<List<Product>> GetAllProducts()
         {
             var products = await _warehouseContext.Products.ToListAsync();
+            foreach (var p in products)
+            {
+                p.Supplier = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == p.SupplierId);
+            }
 
             return products;
         }
 
-        public async Task AddProduct(Product product)
+        public async Task AddProduct(ProductDTO product)
         {
             var productToAdd = new Product
             {
                 Name = product.Name,
-                Id = product.Id,
                 Description = product.Description,
                 SKU = product.SKU,
+                SupplierId = product.SupplierId,
+                Supplier = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == product.SupplierId)
             };
             
             _warehouseContext.Products.Add(productToAdd);
             await _warehouseContext.SaveChangesAsync();
         }
 
-        public async Task UpdateProduct(Product updatedProduct, long id)
+        public async Task UpdateProduct(ProductDTO updatedProduct, long id)
         {
             var productToUpdate = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
 
