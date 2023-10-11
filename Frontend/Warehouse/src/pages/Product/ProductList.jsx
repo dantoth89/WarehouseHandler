@@ -7,6 +7,9 @@ function ProductList() {
     const [sku, setSku] = useState('');
     const [description, setDescription] = useState('');
     const [supplier, setSupplier] = useState('');
+    const [supplierName, setSupplierName] = useState('');
+
+
 
     const productList = () => {
         const token = localStorage.getItem('jwtToken');
@@ -51,6 +54,11 @@ function ProductList() {
             deleteProduct(id);
         }
     };
+
+    const toSupplierPage = (id) => {
+        window.location.href = `/supplierupdate/${id}`;
+    }
+
     const deleteProduct = (id) => {
         const token = localStorage.getItem('jwtToken');
 
@@ -123,7 +131,7 @@ function ProductList() {
                             <td>{product.name}</td>
                             <td>{product.sku}</td>
                             <td>{product.description}</td>
-                            <td>{product.supplier}</td>
+                            <td onClick={() => toSupplierPage(product.supplier.id)}>{product.supplier.name}</td>
                             <td>
                                 <Link to={`/productupdate/${product.id}`}>
                                     Update
