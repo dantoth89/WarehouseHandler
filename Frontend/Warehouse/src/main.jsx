@@ -4,11 +4,17 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import Login from './pages/Login.jsx'
-import ProductList from './pages/ProductList.jsx'
 import Navbar from "./pages/Navbar.jsx";
-import SupplierList from "./pages/SupplierList.jsx"
-import LocationList from "./pages/LocationList.jsx";
-import UpdateProduct from "./pages/UpdateProduct.jsx";
+
+import SupplierList from "./pages/Supplier/SupplierList.jsx";
+import SupplierAdd from "./pages/Supplier/SupplierAdd.jsx";
+import SupplierUpdate from "./pages/Supplier/SupplierUpdate.jsx";
+
+import ProductList from "./pages/Product/ProductList.jsx";
+import ProductUpdate from "./pages/Product/ProductUpdate.jsx";
+import ProductAdd from "./pages/Product/ProductAdd.jsx";
+
+import LocationList from "./pages/Location/LocationList.jsx";
 
 
 const router = createBrowserRouter([
@@ -29,8 +35,20 @@ const router = createBrowserRouter([
     element: <LocationList />,
   },
   {
-    path: "/updateproduct/:id",
-    element: <UpdateProduct />,
+    path: "/productupdate/:id",
+    element: <ProductUpdate />,
+  },
+  {
+    path: "/addsupplier",
+    element: <SupplierAdd />,
+  },
+  {
+    path: "/supplierupdate/:id",
+    element: <SupplierUpdate />,
+  },
+  {
+    path: "/productadd",
+    element: <ProductAdd />,
   },
 ],
 );
