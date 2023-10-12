@@ -148,10 +148,7 @@ function SupplierList() {
                                     <Link to={`/supplierinfo/${supplier.id}`}>
                                         Update
                                     </Link>
-                                    <button
-                                        onClick={() => handleDeleteClick(supplier.id)}
-                                        className="btn"
-                                    >
+                                    <button onClick={() => handleDeleteClick(supplier.id)} className="btn">
                                         Delete
                                     </button>
                                 </td>
