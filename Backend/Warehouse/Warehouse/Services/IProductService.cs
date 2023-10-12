@@ -1,4 +1,5 @@
-﻿using Warehouse.Models.Entities;
+﻿using Warehouse.Models.DTO;
+using Warehouse.Models.Entities;
 
 namespace Warehouse.Services;
 
@@ -8,9 +9,9 @@ public interface IProductService
     
     Task<List<Product>> GetAllProducts();
     
-    Task AddProduct(Product product);
+    Task AddProduct(ProductDTO product);
     
-    Task UpdateProduct(Product product, long id);
+    Task UpdateProduct(ProductDTO product, long id);
     
     Task DeleteProduct(long id);
 }
