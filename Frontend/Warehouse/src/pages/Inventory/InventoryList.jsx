@@ -4,6 +4,19 @@ import { Link } from 'react-router-dom';
 function InventoryList() {
     const [inventory, setInventory] = useState([]);
     const [locations, setLocations] = useState([]);
+    const [name, setName] = useState('');
+    const [sku, setSku] = useState('');
+    const [description, setDescription] = useState('');
+
+    useEffect(() => {
+        const filtered = inventory.filter((item) =>
+            (name === '' || item.product.name.toLowerCase().includes(name.toLowerCase())) &&
+            (sku === '' || item.product.sku.toLowerCase().includes(sku.toLowerCase())) &&
+            (description === '' || item.product.description.toLowerCase().includes(description.toLowerCase()))
+        );
+        setInventory(filtered);
+    }, [name, sku, description]);
+
 
     const inventoryList = () => {
         const token = localStorage.getItem('jwtToken');
@@ -54,6 +67,49 @@ function InventoryList() {
     }
 
     useEffect(() => {
+        const filtered = inventory.filter((item) =>
+            (name === '' || item.product.name.toLowerCase().includes(name.toLowerCase())) &&
+            (sku === '' || item.product.sku.toLowerCase().includes(sku.toLowerCase())) &&
+            (description === '' || item.product.description.toLowerCase().includes(description.toLowerCase()))
+        );
+        setInventory(filtered);
+    }, [name, sku, description]);
+
+    const handleDeleteClick = (id) => {
+        const shouldDelete = window.confirm(
+            'Are you sure you want to delete this inventory?'
+        );
+
+        if (shouldDelete) {
+            deleteInventory(id);
+        }
+    };
+
+    const deleteInventory = (id) => {
+        const token = localStorage.getItem('jwtToken');
+
+        fetch(`http://localhost:5213/inventory/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    setInventory((prevInventory) =>
+                        prevInventory.filter((inventory) => inventory.id !== id)
+                    );
+                } else {
+                    console.error('Failed to delete inventory. Status:', res.status);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    useEffect(() => {
         inventoryList();
         locationList();
     }, []);
@@ -62,6 +118,26 @@ function InventoryList() {
         <div className="inventoryContainer">
             <h2 className="titles">Inventory</h2>
             <Link to={`/inventoryadd`}>Add Inventory Item</Link>
+            <div className="search-container">
+                <input
+                    type="text"
+                    placeholder="Product Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="SKU"
+                    value={sku}
+                    onChange={(e) => setSku(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -87,10 +163,7 @@ function InventoryList() {
                                 <Link to={`/inventoryinfo/${item.id}`}>
                                     Update
                                 </Link>
-                                <button
-                                    onClick={() => handleDeleteClick(item.id)}
-                                    className="btn"
-                                >
+                                <button onClick={() => handleDeleteClick(item.id)} className="btn">
                                     Delete
                                 </button>
                             </td>
