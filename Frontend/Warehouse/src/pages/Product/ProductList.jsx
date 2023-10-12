@@ -7,9 +7,6 @@ function ProductList() {
     const [sku, setSku] = useState('');
     const [description, setDescription] = useState('');
     const [supplier, setSupplier] = useState('');
-    const [supplierName, setSupplierName] = useState('');
-
-
 
     const productList = () => {
         const token = localStorage.getItem('jwtToken');
@@ -56,7 +53,7 @@ function ProductList() {
     };
 
     const toSupplierPage = (id) => {
-        window.location.href = `/supplierupdate/${id}`;
+        window.location.href = `/supplierinfo/${id}`;
     }
 
     const deleteProduct = (id) => {
