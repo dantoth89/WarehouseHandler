@@ -17,12 +17,18 @@ function Navbar() {
     const locations = () => {
         window.location.href = '/locations';
     }
+
+    const inventories = () => {
+        window.location.href = '/inventories';
+    }
+
     return (
         <header>
             <nav>
                 <button onClick={suppliers}>Suppliers</button>
                 <button onClick={products}>Products</button>
                 <button onClick={locations}>Locations</button>
+                <button onClick={inventories}>Inventories</button>
                 <button onClick={handleLogout}>Logout</button>
             </nav>
         </header>
