@@ -8,13 +8,16 @@ import Navbar from "./pages/Navbar.jsx";
 
 import SupplierList from "./pages/Supplier/SupplierList.jsx";
 import SupplierAdd from "./pages/Supplier/SupplierAdd.jsx";
-import SupplierUpdate from "./pages/Supplier/SupplierUpdate.jsx";
+import SupplierInfo from "./pages/Supplier/SupplierInfo.jsx";
 
 import ProductList from "./pages/Product/ProductList.jsx";
 import ProductUpdate from "./pages/Product/ProductUpdate.jsx";
 import ProductAdd from "./pages/Product/ProductAdd.jsx";
 
 import LocationList from "./pages/Location/LocationList.jsx";
+
+import InventoryList from "./pages/Inventory/InventoryList.jsx";
+import InventoryInfo from "./pages/Inventory/InventoryInfo.jsx";
 
 
 const router = createBrowserRouter([
@@ -43,12 +46,20 @@ const router = createBrowserRouter([
     element: <SupplierAdd />,
   },
   {
-    path: "/supplierupdate/:id",
-    element: <SupplierUpdate />,
+    path: "/supplierinfo/:id",
+    element: <SupplierInfo />,
   },
   {
     path: "/productadd",
     element: <ProductAdd />,
+  },
+  {
+    path: "/inventories",
+    element: <InventoryList />,
+  },
+  {
+    path: "/inventoryinfo/:id",
+    element: <InventoryInfo />,
   },
 ],
 );
