@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 function LocationList() {
     const [locations, setLocations] = useState([]);
-    const [locationCode, setLocationCode] = useState(''); // Added state
-    const [notes, setNotes] = useState(''); // Added state
+    const [locationCode, setLocationCode] = useState('');
+    const [notes, setNotes] = useState('');
 
     const locationList = () => {
         const token = localStorage.getItem('jwtToken');
@@ -59,6 +59,13 @@ function LocationList() {
             });
     };
 
+    const resetSearch = () => {
+        setLocationCode('');
+        setNotes('');
+        locationList();
+
+    };
+
     useEffect(() => {
         locationList();
     }, []);
@@ -80,6 +87,7 @@ function LocationList() {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                 />
+                <button onClick={resetSearch}>Reset Search</button>
             </div>
             <table>
                 <thead>

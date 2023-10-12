@@ -34,7 +34,7 @@ function ProductList() {
     useEffect(() => {
         const filtered = products.filter((product) =>
             (name === '' || product.name.toLowerCase().includes(name.toLowerCase())) &&
-            (sku === '' || product.SKU.toLowerCase().includes(sku.toLowerCase())) &&
+            (sku === '' || product.sku.toLowerCase().includes(sku.toLowerCase())) &&
             (description === '' || product.description.toLowerCase().includes(description.toLowerCase())) &&
             (supplier === '' || product.supplier.toLowerCase().includes(supplier.toLowerCase()))
         );
@@ -80,6 +80,14 @@ function ProductList() {
             });
     };
 
+    const resetSearch = () => {
+        setName('');
+        setSku('');
+        setDescription('');
+        setSupplier('');
+        productList();
+    };
+
     return (
         <div className="productContainer">
             <h2 className="titles">Products</h2>
@@ -109,6 +117,7 @@ function ProductList() {
                     value={supplier}
                     onChange={(e) => setSupplier(e.target.value)}
                 />
+                <button onClick={resetSearch}>Reset Search</button>
             </div>
             <table>
                 <thead>

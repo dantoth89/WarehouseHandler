@@ -109,6 +109,13 @@ function InventoryList() {
             });
     };
 
+    const resetSearch = () => {
+        setName('');
+        setSku('');
+        setDescription('');
+        inventoryList();
+    };
+
     useEffect(() => {
         inventoryList();
         locationList();
@@ -137,6 +144,7 @@ function InventoryList() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
+                <button onClick={resetSearch}>Reset Search</button>
             </div>
             <table>
                 <thead>

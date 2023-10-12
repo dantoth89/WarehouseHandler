@@ -29,6 +29,20 @@ function SupplierList() {
             });
     };
 
+    useEffect(() => {
+        supplierList();
+    }, []);
+
+    useEffect(() => {
+        const filtered = suppliers.filter((supplier) =>
+            (searchValues.name === '' || supplier.name.toLowerCase().includes(searchValues.name.toLowerCase())) &&
+            (searchValues.description === '' || supplier.description.toLowerCase().includes(searchValues.description.toLowerCase())) &&
+            (searchValues.contactPhone === '' || supplier.contactPhone.toLowerCase().includes(searchValues.contactPhone.toLowerCase())) &&
+            (searchValues.contactEmail === '' || supplier.contactEmail.toLowerCase().includes(searchValues.contactEmail.toLowerCase()))
+        );
+        setSuppliers(filtered);
+    }, [searchValues]);
+
     const handleDeleteClick = (id) => {
         const shouldDelete = window.confirm(
             'Are you sure you want to delete this supplier?'
@@ -63,17 +77,14 @@ function SupplierList() {
             });
     };
 
-    useEffect(() => {
+    const resetSearch = () => {
+        setSearchValues({
+            name: '',
+            description: '',
+            contactPhone: '',
+            contactEmail: '',
+        });
         supplierList();
-    }, []);
-
-    const filterSuppliers = (supplier) => {
-        return (
-            supplier.name.includes(searchValues.name) &&
-            supplier.description.includes(searchValues.description) &&
-            supplier.contactPhone.includes(searchValues.contactPhone) &&
-            supplier.contactEmail.includes(searchValues.contactEmail)
-        );
     };
 
     return (
@@ -122,6 +133,7 @@ function SupplierList() {
                         })
                     }
                 />
+                <button onClick={resetSearch}>Reset Search</button>
             </div>
             <table>
                 <thead>
@@ -135,25 +147,23 @@ function SupplierList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {suppliers
-                        .filter(filterSuppliers)
-                        .map((supplier) => (
-                            <tr key={supplier.id}>
-                                <td>{supplier.id}</td>
-                                <td>{supplier.name}</td>
-                                <td>{supplier.description}</td>
-                                <td>{supplier.contactPhone}</td>
-                                <td>{supplier.contactEmail}</td>
-                                <td>
-                                    <Link to={`/supplierinfo/${supplier.id}`}>
-                                        Update
-                                    </Link>
-                                    <button onClick={() => handleDeleteClick(supplier.id)} className="btn">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                    {suppliers.map((supplier) => (
+                        <tr key={supplier.id}>
+                            <td>{supplier.id}</td>
+                            <td>{supplier.name}</td>
+                            <td>{supplier.description}</td>
+                            <td>{supplier.contactPhone}</td>
+                            <td>{supplier.contactEmail}</td>
+                            <td>
+                                <Link to={`/supplierinfo/${supplier.id}`}>
+                                    Update
+                                </Link>
+                                <button onClick={() => handleDeleteClick(supplier.id)} className="btn">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
