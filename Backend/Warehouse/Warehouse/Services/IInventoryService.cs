@@ -1,4 +1,5 @@
-﻿using Warehouse.Models.Entities;
+﻿using Warehouse.Models.DTO;
+using Warehouse.Models.Entities;
 
 namespace Warehouse.Services;
 
@@ -8,7 +9,7 @@ public interface IInventoryService
     
     Task<List<Inventory>> GetAllInventories();
     
-    Task AddInventory(Inventory inventory);
+    Task AddInventory(InventoryDTO inventory);
     
     Task UpdateInventory(Inventory inventory, long id);
     

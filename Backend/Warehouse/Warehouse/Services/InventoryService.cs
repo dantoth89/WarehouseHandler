@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Warehouse.Data;
+using Warehouse.Models.DTO;
 using Warehouse.Models.Entities;
 
 namespace Warehouse.Services
@@ -16,8 +17,10 @@ namespace Warehouse.Services
         public async Task<Inventory> GetInventory(long inventoryId)
         {
             var inventory = await _warehouseContext.Inventories
-                .Include(i => i.Product)
-                .FirstOrDefaultAsync(i => i.InventoryId == inventoryId);
+                .FirstOrDefaultAsync(i => i.Id == inventoryId);
+            inventory.Product = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == inventory.ProductId);
+            inventory.Product.Supplier =
+                await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == inventory.Product.SupplierId);
 
             if (inventory == null)
             {
@@ -30,32 +33,42 @@ namespace Warehouse.Services
         public async Task<List<Inventory>> GetAllInventories()
         {
             var inventories = await _warehouseContext.Inventories
-                .Include(i => i.Product) 
                 .ToListAsync();
-
+            foreach (var i in inventories)
+            {
+                i.Product = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == i.ProductId);
+                i.Product.Supplier =
+                    await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == i.Product.SupplierId);
+            }
+            
             return inventories;
         }
 
-        public async Task AddInventory(Inventory inventory)
+        public async Task AddInventory(InventoryDTO inventory)
         {
-            _warehouseContext.Inventories.Add(inventory);
+            var newInventory = new Inventory
+            {
+                Quantity = inventory.Quantity,
+                ProductId = inventory.ProductId,
+                Product = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == inventory.ProductId),
+                LocationId = inventory.LocationId,
+            };
+            
+            _warehouseContext.Inventories.Add(newInventory);
             await _warehouseContext.SaveChangesAsync();
         }
 
         public async Task UpdateInventory(Inventory updatedInventory, long id)
         {
-            var inventoryToUpdate = await _warehouseContext.Inventories
-                .FirstOrDefaultAsync(i => i.InventoryId == id);
+            var inventoryToUpdate = await _warehouseContext.Inventories.FirstOrDefaultAsync(i => i.Id == id);
 
             if (inventoryToUpdate == null)
             {
                 throw new ArgumentException($"Inventory with Id {id} does not exist");
             }
 
-            inventoryToUpdate.ProductId = updatedInventory.ProductId;
             inventoryToUpdate.LocationId = updatedInventory.LocationId;
             inventoryToUpdate.Quantity = updatedInventory.Quantity;
-            inventoryToUpdate.BatchNumber = updatedInventory.BatchNumber;
 
             await _warehouseContext.SaveChangesAsync();
         }
@@ -63,7 +76,7 @@ namespace Warehouse.Services
         public async Task DeleteInventory(long id)
         {
             var inventoryToDelete = await _warehouseContext.Inventories
-                .FirstOrDefaultAsync(i => i.InventoryId == id);
+                .FirstOrDefaultAsync(i => i.Id == id);
 
             if (inventoryToDelete == null)
             {
