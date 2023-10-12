@@ -145,7 +145,7 @@ function SupplierList() {
                                 <td>{supplier.contactPhone}</td>
                                 <td>{supplier.contactEmail}</td>
                                 <td>
-                                    <Link to={`/supplierupdate/${supplier.id}`}>
+                                    <Link to={`/supplierinfo/${supplier.id}`}>
                                         Update
                                     </Link>
                                     <button
