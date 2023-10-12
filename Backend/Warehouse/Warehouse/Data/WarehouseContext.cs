@@ -10,7 +10,8 @@ public class WarehouseContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
-   
+    public DbSet<Location> Locations { get; set; }
+
     private readonly IConfiguration Configuration; 
     
     public WarehouseContext(DbContextOptions<WarehouseContext> options) : base(options)
