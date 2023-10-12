@@ -15,9 +15,12 @@ import ProductUpdate from "./pages/Product/ProductUpdate.jsx";
 import ProductAdd from "./pages/Product/ProductAdd.jsx";
 
 import LocationList from "./pages/Location/LocationList.jsx";
+import LocationAdd from "./pages/Location/LocationAdd.jsx";
+import LocationInfo from "./pages/Location/LocationInfo.jsx";
 
 import InventoryList from "./pages/Inventory/InventoryList.jsx";
 import InventoryInfo from "./pages/Inventory/InventoryInfo.jsx";
+import InventoryAdd from "./pages/Inventory/InventoryAdd.jsx";
 
 
 const router = createBrowserRouter([
@@ -60,6 +63,18 @@ const router = createBrowserRouter([
   {
     path: "/inventoryinfo/:id",
     element: <InventoryInfo />,
+  },
+  {
+    path: "/locationadd",
+    element: <LocationAdd />,
+  },
+  {
+    path: "/locationinfo/:id",
+    element: <LocationInfo />,
+  },
+  {
+    path: "/inventoryadd",
+    element: <InventoryAdd />,
   },
 ],
 );
