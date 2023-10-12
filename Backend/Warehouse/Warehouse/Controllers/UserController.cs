@@ -63,8 +63,11 @@ public class UserController : ControllerBase
         try
         {
             var jwtToken = _userService.Login(user.Username, user.Password);
+            if (jwtToken != null) {
+                return Ok(jwtToken);
+            }
 
-            return Ok(jwtToken);
+            return BadRequest("Login error");
         }
         catch (Exception ex)
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.Models.DTO;
 using Warehouse.Services;
 using Warehouse.Models.Entities;
 
@@ -17,7 +18,7 @@ public class InventoryController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> AddInventory([FromBody] Inventory inventory)
+    public async Task<IActionResult> AddInventory([FromBody] InventoryDTO inventory)
     {
         try
         {

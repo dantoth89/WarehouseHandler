@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.Models.DTO;
 using Warehouse.Services;
-using Warehouse.Models.Entities;
 
 namespace Warehouse.Controllers;
 
@@ -17,7 +17,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> AddProduct([FromBody] Product product)
+    public async Task<IActionResult> AddProduct([FromBody] ProductDTO product)
     {
         try
         {
@@ -59,7 +59,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct([FromBody] Product product, long id)
+    public async Task<IActionResult> UpdateProduct([FromBody] ProductDTO product, long id)
     {
         try
         {
