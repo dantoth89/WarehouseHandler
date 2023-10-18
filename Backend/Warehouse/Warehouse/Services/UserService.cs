@@ -67,9 +67,9 @@ public class UserService : IUserService
         {
             throw new ArgumentException($"User with Id {id} does not exist");
         }
-
+     
         userToUpdate.Username = updatedUser.Username;
-        userToUpdate.Password = updatedUser.Password;
+        userToUpdate.Password = Hash(updatedUser.Password, userToUpdate.Salt);
         userToUpdate.Role = updatedUser.Role;
 
         await _warehouseContext.SaveChangesAsync();
