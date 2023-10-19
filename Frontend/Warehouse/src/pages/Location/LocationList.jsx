@@ -5,6 +5,7 @@ function LocationList() {
     const [locations, setLocations] = useState([]);
     const [locationCode, setLocationCode] = useState('');
     const [notes, setNotes] = useState('');
+    const [usedLocations, setUsedLocations] = useState([]);
 
     const locationList = () => {
         const token = localStorage.getItem('jwtToken');
@@ -19,6 +20,25 @@ function LocationList() {
             .then((res) => res.json())
             .then((data) => {
                 setLocations(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    const fetchUsedLocations = () => {
+        const token = localStorage.getItem('jwtToken');
+
+        fetch('http://localhost:5213/inventory/usedlocations', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setUsedLocations(data);
             })
             .catch((error) => {
                 console.error(error);
@@ -57,17 +77,19 @@ function LocationList() {
             .catch((error) => {
                 console.error(error);
             });
+
+        fetchUsedLocations();
     };
 
     const resetSearch = () => {
         setLocationCode('');
         setNotes('');
         locationList();
-
     };
 
     useEffect(() => {
         locationList();
+        fetchUsedLocations();
     }, []);
 
     return (
@@ -95,6 +117,7 @@ function LocationList() {
                         <th>ID</th>
                         <th>Location Code</th>
                         <th>Notes</th>
+                        <th>In Use</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -109,6 +132,9 @@ function LocationList() {
                                 <td>{location.id}</td>
                                 <td>{location.locationCode}</td>
                                 <td>{location.notes}</td>
+                                <td>
+                                    {usedLocations.some(usedLocation => usedLocation.id === location.id) ? 'X' : '-'}
+                                </td>
                                 <td>
                                     <Link to={`/locationinfo/${location.id}`}>Update</Link>
                                     <button onClick={() => handleDeleteClick(location.id)} className="btn">Delete</button>
