@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 
 function InventoryAdd() {
     const [inventory, setInventory] = useState({
@@ -9,6 +11,7 @@ function InventoryAdd() {
 
     const [products, setProducts] = useState([]);
     const [locations, setLocations] = useState([]);
+    const [error, setError] = useState(null);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -20,6 +23,13 @@ function InventoryAdd() {
 
     const handleAddInventory = () => {
         const token = localStorage.getItem('jwtToken');
+
+        if (inventory.quantity <= 0) {
+            setError('Quantity must be greater than 0');
+            return;
+        }
+
+        setError(null);
 
         fetch('http://localhost:5213/inventory', {
             method: 'POST',
@@ -119,9 +129,13 @@ function InventoryAdd() {
                         onChange={handleInputChange}
                     />
                 </div>
+                {error && <p className="error">{error}</p>}
                 <button type="button" onClick={handleAddInventory}>
                     Add Inventory
                 </button>
+                <Link to={`/inventories`}>
+                    Back
+                </Link>
             </form>
         </>
     );

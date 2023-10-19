@@ -88,7 +88,7 @@ public class InventoryController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateInventory([FromBody] Inventory inventory, long id)
+    public async Task<IActionResult> UpdateInventory([FromBody] InventoryDTO inventory, long id)
     {
         try
         {

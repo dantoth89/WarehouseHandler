@@ -58,7 +58,7 @@ namespace Warehouse.Services
             await _warehouseContext.SaveChangesAsync();
         }
 
-        public async Task UpdateInventory(Inventory updatedInventory, long id)
+        public async Task UpdateInventory(InventoryDTO updatedInventory, long id)
         {
             var inventoryToUpdate = await _warehouseContext.Inventories.FirstOrDefaultAsync(i => i.Id == id);
 

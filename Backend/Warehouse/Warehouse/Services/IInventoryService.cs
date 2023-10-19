@@ -11,7 +11,7 @@ public interface IInventoryService
     
     Task AddInventory(InventoryDTO inventory);
     
-    Task UpdateInventory(Inventory inventory, long id);
+    Task UpdateInventory(InventoryDTO inventory, long id);
     
     Task DeleteInventory(long id);
     Task<List<Location>> GetUsedLocations();
