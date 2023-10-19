@@ -58,6 +58,34 @@ public class InventoryController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    
+    [HttpGet("usedlocations")]
+    public async Task<IActionResult> GetUsedLocations()
+    {
+        try
+        {
+            var inventories = await _inventoryService.GetUsedLocations();
+            return Ok(inventories);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
+    [HttpGet("unusedlocations")]
+    public async Task<IActionResult> GetUnusedLocations()
+    {
+        try
+        {
+            var inventories = await _inventoryService.GetUnusedLocations();
+            return Ok(inventories);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateInventory([FromBody] Inventory inventory, long id)
