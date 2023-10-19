@@ -86,5 +86,34 @@ namespace Warehouse.Services
             _warehouseContext.Inventories.Remove(inventoryToDelete);
             await _warehouseContext.SaveChangesAsync();
         }
+
+        public async Task<List<Location>> GetUsedLocations()
+        {
+            var locationIds = await _warehouseContext.Inventories
+                .Select(i => i.LocationId)
+                .Distinct()
+                .ToListAsync();
+
+            var usedLocations = await _warehouseContext.Locations
+                .Where(l => locationIds.Contains(l.Id))
+                .ToListAsync();
+
+            return usedLocations;
+        }
+        
+        public async Task<List<Location>> GetUnusedLocations()
+        {
+            var usedLocationIds = await _warehouseContext.Inventories
+                .Select(i => i.LocationId)
+                .Distinct()
+                .ToListAsync();
+
+            var unusedLocations = await _warehouseContext.Locations
+                .Where(l => !usedLocationIds.Contains(l.Id))
+                .ToListAsync();
+
+            return unusedLocations;
+        }
+
     }
 }
