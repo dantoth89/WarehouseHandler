@@ -59,7 +59,7 @@ function InventoryAdd() {
                 console.error(error);
             });
 
-        fetch('http://localhost:5213/location', {
+        fetch('http://localhost:5213/inventory/unusedlocations', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
