@@ -14,4 +14,6 @@ public interface IInventoryService
     Task UpdateInventory(Inventory inventory, long id);
     
     Task DeleteInventory(long id);
+    Task<List<Location>> GetUsedLocations();
+    Task<List<Location>> GetUnusedLocations();
 }
