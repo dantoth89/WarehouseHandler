@@ -14,13 +14,28 @@ public class OrderController : ControllerBase
     {
         _orderService = orderService;
     }
-    
-    [HttpPost]
-    public async Task<IActionResult> MakeOrder([FromBody] List<int> invetoryList)
+
+    [HttpGet]
+    public async Task<IActionResult> GetOrders()
     {
         try
         {
-            await _orderService.GenerateOrder(invetoryList);
+            var orders = await _orderService.GetOrders();
+            return Ok(orders);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> MakeOrder([FromBody] List<int> invetoryList, string notes)
+    {
+        try
+        {
+            await _orderService.GenerateOrder(invetoryList, notes);
             return Ok();
         }
         catch (Exception ex)
