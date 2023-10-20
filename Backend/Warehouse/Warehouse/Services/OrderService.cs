@@ -8,6 +8,7 @@ public class OrderService : IOrderService
 {
     private readonly WarehouseContext _warehouseContext;
     private readonly ILogService _logService;
+    private IOrderService _orderServiceImplementation;
 
     public OrderService(WarehouseContext warehouseContext, ILogService logService)
     {
@@ -15,7 +16,7 @@ public class OrderService : IOrderService
         _logService = logService;
     }
     
-    public async Task GenerateOrder(List<int> inventoryIds)
+    public async Task GenerateOrder(List<int> inventoryIds,string notes)
     {
         List<Inventory> inventoriesForOrder = new List<Inventory>();
 
@@ -24,6 +25,7 @@ public class OrderService : IOrderService
             var inventory = await _warehouseContext.Inventories.FirstOrDefaultAsync(x => x.Id == inventoryId);
             if (inventory != null)
             {
+                _warehouseContext.Inventories.Remove(inventory);
                 inventoriesForOrder.Add(inventory);
             }
         }
@@ -40,6 +42,22 @@ public class OrderService : IOrderService
             logMessage.AppendLine("------------------------------");
         }
 
+        var order = new Order
+        {
+            OrderDate = DateTime.Now,
+            OrderNotes = notes,
+            OrderSummary = logMessage.ToString()
+        };
+        
+        _warehouseContext.Orders.Add(order);
+        await _warehouseContext.SaveChangesAsync();
+
         _logService.MakeLog(logMessage.ToString());
+    }
+
+    public async Task<List<Order>> GetOrders()
+    {
+        var orders = await _warehouseContext.Orders.ToListAsync();
+        return orders;
     }
 }
