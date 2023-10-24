@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.Models.DTO;
 using Warehouse.Services;
 
 namespace Warehouse.Controllers;
@@ -31,11 +32,11 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> MakeOrder([FromBody] List<int> invetoryList, string notes)
+    public async Task<IActionResult> MakeOrder([FromBody] OrderDTO orderDto)
     {
         try
         {
-            await _orderService.GenerateOrder(invetoryList, notes);
+            await _orderService.GenerateOrder(orderDto);
             return Ok();
         }
         catch (Exception ex)
