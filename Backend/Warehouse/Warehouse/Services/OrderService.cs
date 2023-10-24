@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Data;
+using Warehouse.Models.DTO;
 using Warehouse.Models.Entities;
 using Warehouse.Services;
 
@@ -16,44 +17,49 @@ public class OrderService : IOrderService
         _logService = logService;
     }
     
-    public async Task GenerateOrder(List<int> inventoryIds,string notes)
+    public async Task GenerateOrder(OrderDTO orderDto)
     {
         List<Inventory> inventoriesForOrder = new List<Inventory>();
 
-        foreach (var inventoryId in inventoryIds)
+        foreach (var (inventoryId, amount) in orderDto.InventoriesToOrder)
         {
             var inventory = await _warehouseContext.Inventories.FirstOrDefaultAsync(x => x.Id == inventoryId);
-            if (inventory != null)
+            if (inventory != null && inventory.Quantity >= amount)
             {
-                _warehouseContext.Inventories.Remove(inventory);
+                inventory.Quantity -= amount;
                 inventoriesForOrder.Add(inventory);
             }
         }
 
-        StringBuilder logMessage = new StringBuilder();
+        if (inventoriesForOrder.Count == 0)
+        {
+            throw new Exception("No inventories for the order.");
+        }
+
+        var logMessage = new StringBuilder();
         logMessage.AppendLine("Selected Inventory Items for Order:");
-        
+
         foreach (var inventory in inventoriesForOrder)
         {
             var locationCode = await _warehouseContext.Locations.FirstOrDefaultAsync(l => l.Id == inventory.LocationId);
             logMessage.AppendLine($"ID: {inventory.Id}");
             logMessage.AppendLine($"Location: {locationCode.LocationCode}");
-            logMessage.AppendLine($"Quantity: {inventory.Quantity}");
+            logMessage.AppendLine($"Quantity Ordered: {orderDto.InventoriesToOrder[inventory.Id]}");
             logMessage.AppendLine("------------------------------");
         }
 
         var order = new Order
         {
             OrderDate = DateTime.Now,
-            OrderNotes = notes,
+            OrderNotes = orderDto.Notes,
             OrderSummary = logMessage.ToString()
         };
-        
+
         _warehouseContext.Orders.Add(order);
         await _warehouseContext.SaveChangesAsync();
-
         _logService.MakeLog(logMessage.ToString());
     }
+
 
     public async Task<List<Order>> GetOrders()
     {
