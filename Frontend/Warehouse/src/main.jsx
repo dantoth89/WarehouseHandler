@@ -23,6 +23,7 @@ import InventoryInfo from "./pages/Inventory/InventoryInfo.jsx";
 import InventoryAdd from "./pages/Inventory/InventoryAdd.jsx";
 
 import OrderList from "./pages/Order/OrderList.jsx";
+import OrderAdd from "./pages/Order/OrderAdd.jsx";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
   {
     path: "/orders",
     element: <OrderList />,
+  },
+  {
+    path: "/orderadd",
+    element: <OrderAdd />,
   },
 ],
 );

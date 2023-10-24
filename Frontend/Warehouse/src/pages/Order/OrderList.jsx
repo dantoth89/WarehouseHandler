@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function OrderList() {
     const [orders, setOrders] = useState([]);
@@ -29,6 +30,7 @@ function OrderList() {
     return (
         <div className="orderContainer">
             <h2 className="titles">Orders</h2>
+            <Link to="/orderadd">Add Order</Link>
             <table>
                 <thead>
                     <tr>
