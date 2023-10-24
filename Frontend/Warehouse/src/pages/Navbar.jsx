@@ -22,6 +22,10 @@ function Navbar() {
         window.location.href = '/inventories';
     }
 
+    const orders = () => {
+        window.location.href = '/orders';
+    }
+
     return (
         <header>
             <nav>
@@ -29,6 +33,7 @@ function Navbar() {
                 <button onClick={products}>Products</button>
                 <button onClick={locations}>Locations</button>
                 <button onClick={inventories}>Inventories</button>
+                <button onClick={orders}>Orders</button>
                 <button onClick={handleLogout}>Logout</button>
             </nav>
         </header>
