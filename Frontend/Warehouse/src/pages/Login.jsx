@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Button from '@mui/material/Button';
 
 function Login() {
   const [loginData, setLoginData] = useState({
@@ -33,6 +34,7 @@ function Login() {
         localStorage.setItem('jwtToken', token);
         navigate('/products')
       } else {
+        alert('Login error');
         console.error('Login error');
       }
     } catch (error) {
@@ -44,7 +46,7 @@ function Login() {
     <div className="loginContainer">
       <h2 className="titles">Login</h2>
       <form onSubmit={handleSubmit}>
-        <div className="snippetInfo">
+        <div>
           <label htmlFor="name">User name:</label>
           <input
             type="text"
@@ -53,7 +55,7 @@ function Login() {
             onChange={handleInputChange}
           />
         </div>
-        <div className="snippetInfo">
+        <div>
           <label htmlFor="language">Password:</label>
           <input
             type="password"
@@ -62,7 +64,7 @@ function Login() {
             onChange={handleInputChange}
           />
         </div>
-        <button className="btn" type="submit">Login</button>
+        <Button variant="contained" className='btn' type="submit">Login</Button>
       </form>
     </div>
   );
