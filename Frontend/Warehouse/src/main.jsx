@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 import Login from './pages/Login.jsx'
 import Navbar from "./pages/Navbar.jsx";
@@ -43,7 +42,7 @@ const router = createBrowserRouter([
     element: <LocationList />,
   },
   {
-    path: "/productupdate/:id",
+    path: "/productinfo/:id",
     element: <ProductUpdate />,
   },
   {
@@ -55,7 +54,7 @@ const router = createBrowserRouter([
     element: <SupplierInfo />,
   },
   {
-    path: "/productadd",
+    path: "/addproduct",
     element: <ProductAdd />,
   },
   {
@@ -67,7 +66,7 @@ const router = createBrowserRouter([
     element: <InventoryInfo />,
   },
   {
-    path: "/locationadd",
+    path: "/addlocation",
     element: <LocationAdd />,
   },
   {
@@ -75,7 +74,7 @@ const router = createBrowserRouter([
     element: <LocationInfo />,
   },
   {
-    path: "/inventoryadd",
+    path: "/addinventory",
     element: <InventoryAdd />,
   },
   {
@@ -83,7 +82,7 @@ const router = createBrowserRouter([
     element: <OrderList />,
   },
   {
-    path: "/orderadd",
+    path: "/addorder",
     element: <OrderAdd />,
   },
 ],
