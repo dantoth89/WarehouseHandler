@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 function OrderAdd() {
     const [inventories, setInventories] = useState([]);
@@ -59,6 +60,7 @@ function OrderAdd() {
                 console.log(orderData);
                 if (res.status === 200) {
                     alert('Order created successfully');
+                    window.location.href = '/orders';
                 } else {
                     alert('Failed to create order');
                 }
@@ -105,9 +107,9 @@ function OrderAdd() {
                     onChange={(e) => setOrderNotes(e.target.value)}
                 />
             </div>
-            <button onClick={handleSubmit} disabled={loading}>
+            <Button variant="contained" className='btn' onClick={handleSubmit} disabled={loading}>
                 Create Order
-            </button>
+            </Button>
         </div>
     );
 }

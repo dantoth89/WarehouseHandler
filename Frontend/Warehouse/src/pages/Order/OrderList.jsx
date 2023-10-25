@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 function OrderList() {
     const [orders, setOrders] = useState([]);
@@ -27,11 +28,19 @@ function OrderList() {
         fetchOrders();
     }, []);
 
+    const handleAddClick = () => {
+        window.location.href = `/addorder`;
+    };
+
     return (
-        <div className="orderContainer">
+        <div className="list-Container">
             <h2 className="titles">Orders</h2>
-            <Link to="/orderadd">Add Order</Link>
-            <table>
+            <Button
+                variant="contained"
+                className="btn"
+                onClick={() => handleAddClick()}>
+                Add Order
+            </Button>            <table>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -47,11 +56,11 @@ function OrderList() {
                             <td>{order.orderNotes}</td>
                             <td>{new Date(order.orderDate).toLocaleString()}</td>
                             <td>
-                                <ul>
+                                <tr>
                                     {order.orderSummary.split('------------------------------').map((item, index) => (
-                                        <li key={index}>{item.trim()}</li>
+                                        <td key={index}>{item.trim()}</td>
                                     ))}
-                                </ul>
+                                </tr>
                             </td>
                         </tr>
                     ))}
