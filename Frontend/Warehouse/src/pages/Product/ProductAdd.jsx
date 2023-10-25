@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
 
 function ProductAdd() {
     const [product, setProduct] = useState({
@@ -111,9 +112,9 @@ function ProductAdd() {
                         ))}
                     </select>
                 </div>
-                <button type="button" onClick={handleClick}>
+                <Button variant="contained" className='btn' type="button" onClick={handleClick}>
                     Add Product
-                </button>
+                </Button>
             </form>
         </>
     );

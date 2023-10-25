@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -88,10 +89,24 @@ function ProductList() {
         productList();
     };
 
+
+    const handleInfoClick = (id) => {
+        window.location.href = `/productinfo/${id}`;
+    };
+
+    const handleAddClick = () => {
+        window.location.href = `/addproduct`;
+    };
+
     return (
-        <div className="productContainer">
+        <div className="list-Container">
             <h2 className="titles">Products</h2>
-            <Link to={`/productadd`}>Add Product</Link>
+            <Button
+                variant="contained"
+                className="btn"
+                onClick={() => handleAddClick()}>
+                Add Supplier
+            </Button>
             <div className="search-container">
                 <input
                     type="text"
@@ -117,7 +132,7 @@ function ProductList() {
                     value={supplier}
                     onChange={(e) => setSupplier(e.target.value)}
                 />
-                <button onClick={resetSearch}>Reset Search</button>
+                <Button variant="contained" className='btn' onClick={resetSearch}>Reset Search</Button>
             </div>
             <table>
                 <thead>
@@ -139,15 +154,17 @@ function ProductList() {
                             <td>{product.description}</td>
                             <td onClick={() => toSupplierPage(product.supplier.id)}>{product.supplier.name}</td>
                             <td>
-                                <Link to={`/productupdate/${product.id}`}>
-                                    Update
-                                </Link>
-                                <button
-                                    onClick={() => handleDeleteClick(product.id)}
+                                <Button
+                                    variant="contained"
                                     className="btn"
+                                    onClick={() => handleInfoClick(product.id)}>
+                                    Info
+                                </Button>
+                                <Button variant="contained" className='btn'
+                                    onClick={() => handleDeleteClick(product.id)}
                                 >
                                     Delete
-                                </button>
+                                </Button>
                             </td>
                         </tr>
                     ))}
