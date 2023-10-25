@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 function ProductUpdate() {
     const { id } = useParams();
@@ -93,9 +94,9 @@ function ProductUpdate() {
                         onChange={handleInputChange}
                     />
                 </div>
-                <button type="button" onClick={handleUpdateClick}>
+                <Button variant="contained" className='btn' type="button" onClick={handleUpdateClick}>
                     Update
-                </button>
+                </Button>
             </form>
         </div>
     );
