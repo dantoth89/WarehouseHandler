@@ -29,6 +29,11 @@ public class OrderService : IOrderService
                 inventory.Quantity -= amount;
                 inventoriesForOrder.Add(inventory);
             }
+
+            if (inventory.Quantity == 0)
+            {
+                _warehouseContext.Inventories.Remove(inventory);
+            }
         }
 
         if (inventoriesForOrder.Count == 0)
