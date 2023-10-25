@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
 
 function SupplierAdd() {
     const [supplier, setSuppliers] = useState({
@@ -76,9 +77,9 @@ function SupplierAdd() {
                     onChange={handleInputChange}
                 />
             </div>
-            <button type="button" onClick={handleClick}>
+            <Button variant="contained" className='btn' type="button" onClick={handleClick}>
                 Add supplier
-            </button>
+            </Button>
         </form>
     </>
 }
