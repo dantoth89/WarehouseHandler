@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 function LocationInfo() {
     const { id } = useParams();
@@ -84,9 +85,9 @@ function LocationInfo() {
                         onChange={handleInputChange}
                     />
                 </div>
-                <button type="button" onClick={handleUpdate}>
+                <Button variant="contained" className='btn' type="button" onClick={handleUpdate}>
                     Update Location
-                </button>
+                </Button>
                 <Link to={`/locations/`}>
                     Back
                 </Link>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '@mui/material/Button';
 
 function LocationAdd() {
     const [location, setLocation] = useState({
@@ -59,9 +60,9 @@ function LocationAdd() {
                         onChange={handleInputChange}
                     />
                 </div>
-                <button type="button" onClick={handleAddLocation}>
+                <Button variant="contained" className='btn' type="button" onClick={handleAddLocation}>
                     Add Location
-                </button>
+                </Button>
             </form>
         </>
     );
