@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 
 function InventoryInfo() {
@@ -116,8 +117,6 @@ function InventoryInfo() {
             </div>
             <form>
                 <div>
-                    {/* <label>Actual location: -- {getLocation(inventory.locationId)} -- </label>
-                    <label>Can be changed to: -- </label> */}
                     <select
                         name="locationId"
                         value={inventory.locationId}
@@ -145,9 +144,9 @@ function InventoryInfo() {
                     />
                 </div>
                 {error && <p className="error">{error}</p>}
-                <button type="button" onClick={handleUpdate}>
+                <Button variant="contained" className='btn' type="button" onClick={handleUpdate}>
                     Update Inventory
-                </button>
+                </Button>
                 <Link to={`/inventories`}>
                     Back
                 </Link>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 
 function InventoryAdd() {
@@ -130,9 +131,9 @@ function InventoryAdd() {
                     />
                 </div>
                 {error && <p className="error">{error}</p>}
-                <button type="button" onClick={handleAddInventory}>
+                <Button variant="contained" className='btn' type="button" onClick={handleAddInventory}>
                     Add Inventory
-                </button>
+                </Button>
                 <Link to={`/inventories`}>
                     Back
                 </Link>
