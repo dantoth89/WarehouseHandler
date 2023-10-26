@@ -42,31 +42,36 @@ function Login() {
     }
   };
 
-  return (
-    <div className="loginContainer">
-      <h2 className="titles">Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">User name:</label>
-          <input
-            type="text"
-            name="username"
-            value={loginData.username}
-            onChange={handleInputChange}
-          />
+  return (<>
+    <h2 className="titles">Login</h2>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} >
+        <div className='submitform'>
+          <div>
+            <label htmlFor="name">User name: </label>
+            <input
+              type="text"
+              name="username"
+              value={loginData.username}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="language">Password: </label>
+            <input
+              type="password"
+              name="password"
+              value={loginData.password}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="language">Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={loginData.password}
-            onChange={handleInputChange}
-          />
+        <div className='loginbtnbox'>
+          <Button variant="contained" className='btn' type="submit">Login</Button>
         </div>
-        <Button variant="contained" className='btn' type="submit">Login</Button>
       </form>
     </div>
+  </>
   );
 }
 
