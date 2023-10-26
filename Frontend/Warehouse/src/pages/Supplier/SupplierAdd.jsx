@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
+import Navbar from '../Navbar';
+
 
 function SupplierAdd() {
     const [supplier, setSuppliers] = useState({
@@ -39,47 +42,60 @@ function SupplierAdd() {
             })
     };
 
+    const handleBack = () => {
+        window.location.href = `/suppliers`;
+    }
+
     return <>
-        <form>
-            <div>
+        <Navbar />{Navbar}
+        <h2 className="titles">Add supplier</h2>
+        <form className="info-container">
+            <div className='info-fields'>
                 <label>Name:</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={supplier.name}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div>
+                <div>
+                    <input
+                        type="text"
+                        name="name"
+                        value={supplier.name}
+                        onChange={handleInputChange}
+                    />
+                </div>
                 <label>Description:</label>
-                <textarea
-                    type="text"
-                    name="description"
-                    value={supplier.description}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div>
+                <div>
+                    <textarea
+                        type="text"
+                        name="description"
+                        value={supplier.description}
+                        onChange={handleInputChange}
+                    />
+                </div>
                 <label>Email:</label>
-                <input
-                    type="text"
-                    name="contactemail"
-                    value={supplier.contactemail}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div>
+                <div>
+                    <input
+                        type="text"
+                        name="contactemail"
+                        value={supplier.contactemail}
+                        onChange={handleInputChange}
+                    />
+                </div>
                 <label>Phone:</label>
-                <textarea
-                    type="text"
-                    name="contactphone"
-                    value={supplier.contactphone}
-                    onChange={handleInputChange}
-                />
+                <div>
+                    <textarea
+                        type="text"
+                        name="contactphone"
+                        value={supplier.contactphone}
+                        onChange={handleInputChange}
+                    />
+                </div>
             </div>
-            <Button variant="contained" className='btn' type="button" onClick={handleClick}>
-                Add supplier
-            </Button>
+            <ButtonGroup variant="contained" className='btngrp'>
+                <Button className='btn' type="button" onClick={handleClick}>
+                    Add supplier
+                </Button>
+                <Button className='btn' type="button" onClick={handleBack}>
+                    Back
+                </Button>
+            </ButtonGroup>
         </form>
     </>
 }

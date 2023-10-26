@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import Navbar from '../Navbar';
 import Button from '@mui/material/Button';
-
+import { ButtonGroup } from '@mui/material';
 
 function SupplierInfo() {
     const { id } = useParams();
@@ -67,50 +67,59 @@ function SupplierInfo() {
             });
     };
 
+    const handleBack = () => {
+        window.location.href = `/suppliers`;
+    }
+
     return (
         <>
-            <h2>Supplier Info</h2>
-            <form>
-                <div>
-                    <label>Name:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={supplier.name}
-                        onChange={handleInputChange}
-                    />
+            <Navbar />{Navbar}
+            <h2 className="titles">Supplier Info</h2>
+            <form className="info-container">
+                <div className='info-fields'>
+                    <label>Name: </label>
+                    <div>
+                        <input
+                            type="text"
+                            name="name"
+                            value={supplier.name}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <label>Description: </label>
+                    <div>
+                        <textarea
+                            name="description"
+                            value={supplier.description}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <label>Email: </label>
+                    <div>
+                        <input
+                            type="text"
+                            name="contactEmail"
+                            value={supplier.contactEmail}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <label>Phone: </label>
+                    <div>
+                        <textarea
+                            name="contactPhone"
+                            value={supplier.contactPhone}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <label>Description:</label>
-                    <textarea
-                        name="description"
-                        value={supplier.description}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="text"
-                        name="contactEmail"
-                        value={supplier.contactEmail}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
-                    <label>Phone:</label>
-                    <textarea
-                        name="contactPhone"
-                        value={supplier.contactPhone}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <Button variant="contained" className='btn' type="button" onClick={handleUpdate}>
-                    Update Supplier
-                </Button>
-                <Link to={`/suppliers/`}>
-                    Back
-                </Link>
+                <ButtonGroup variant="contained" className='btngrp'>
+                    <Button className='btn' type="button" onClick={handleUpdate}>
+                        Update Supplier
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
             </form>
         </>
     );

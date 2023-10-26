@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
+import Navbar from '../Navbar';
 
 function SupplierList() {
     const [suppliers, setSuppliers] = useState([]);
@@ -96,15 +97,17 @@ function SupplierList() {
         window.location.href = `/addsupplier`;
     };
 
-    return (
-        <div className="list-Container">
-            <Button
-                variant="contained"
-                className="btn"
-                onClick={() => handleAddClick()}>
-                Add Supplier
-            </Button>
+    return (<>
+        <Navbar />{Navbar}
+        <div className="list-container">
             <h2 className="titles">Suppliers</h2>
+            <div className="addbtn">
+                <Button
+                    variant="contained"
+                    onClick={() => handleAddClick()}>
+                    Add Supplier
+                </Button>
+            </div>
             <div className="search-container">
                 <input
                     type="text"
@@ -169,21 +172,24 @@ function SupplierList() {
                             <td>{supplier.contactPhone}</td>
                             <td>{supplier.contactEmail}</td>
                             <td>
-                                <Button
-                                    variant="contained"
-                                    className="btn"
-                                    onClick={() => handleInfoClick(supplier.id)}>
-                                    Info
-                                </Button>
-                                <Button variant="contained" className='btn' onClick={() => handleDeleteClick(supplier.id)}>
-                                    Delete
-                                </Button>
+                                <ButtonGroup variant="contained" className='btngrp'>
+                                    <Button
+                                        variant="contained"
+                                        className="btn"
+                                        onClick={() => handleInfoClick(supplier.id)}>
+                                        Info
+                                    </Button>
+                                    <Button variant="contained" className='btn' onClick={() => handleDeleteClick(supplier.id)}>
+                                        Delete
+                                    </Button>
+                                </ButtonGroup>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
+    </>
     );
 }
 
