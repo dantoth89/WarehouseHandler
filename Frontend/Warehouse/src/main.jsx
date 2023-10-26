@@ -10,7 +10,7 @@ import SupplierAdd from "./pages/Supplier/SupplierAdd.jsx";
 import SupplierInfo from "./pages/Supplier/SupplierInfo.jsx";
 
 import ProductList from "./pages/Product/ProductList.jsx";
-import ProductUpdate from "./pages/Product/ProductUpdate.jsx";
+import ProductInfo from "./pages/Product/ProductInfo.jsx";
 import ProductAdd from "./pages/Product/ProductAdd.jsx";
 
 import LocationList from "./pages/Location/LocationList.jsx";
@@ -23,6 +23,7 @@ import InventoryAdd from "./pages/Inventory/InventoryAdd.jsx";
 
 import OrderList from "./pages/Order/OrderList.jsx";
 import OrderAdd from "./pages/Order/OrderAdd.jsx";
+import OrderInfo from "./pages/Order/OrderInfo.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/productinfo/:id",
-    element: <ProductUpdate />,
+    element: <ProductInfo />,
   },
   {
     path: "/addsupplier",
@@ -85,12 +86,15 @@ const router = createBrowserRouter([
     path: "/addorder",
     element: <OrderAdd />,
   },
+  {
+    path: "/orderinfo/:id",
+    element: <OrderInfo />,
+  },
 ],
 );
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Navbar />{Navbar}
     <RouterProvider router={router} />
   </React.StrictMode>,
 )
