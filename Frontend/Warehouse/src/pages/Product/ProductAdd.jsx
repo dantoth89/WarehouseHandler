@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
+import Navbar from '../Navbar';
+
 
 function ProductAdd() {
     const [product, setProduct] = useState({
@@ -67,54 +70,66 @@ function ProductAdd() {
             });
     }, []);
 
+    const handleBack = () => {
+        window.location.href = `/products`;
+    }
+
     return (
         <>
-            <form>
-                <div>
+            <Navbar />{Navbar}
+            <form className="info-container">
+                <div className='info-fields'>
                     <label>Name:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={product.name}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
+                    <div>
+                        <input
+                            type="text"
+                            name="name"
+                            value={product.name}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <label>SKU:</label>
-                    <input
-                        type="text"
-                        name="SKU"
-                        value={product.SKU}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
+                    <div>
+                        <input
+                            type="text"
+                            name="SKU"
+                            value={product.SKU}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <label>Description:</label>
-                    <textarea
-                        type="text"
-                        name="description"
-                        value={product.description}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
+                    <div>
+                        <textarea
+                            type="text"
+                            name="description"
+                            value={product.description}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <label>Supplier:</label>
-                    <select
-                        name="supplierId"
-                        value={product.supplierId}
-                        onChange={handleSupplierChange}
-                    >
-                        <option value="">Select a supplier</option>
-                        {suppliers.map((supplier) => (
-                            <option key={supplier.id} value={supplier.id}>
-                                {supplier.name}
-                            </option>
-                        ))}
-                    </select>
+                    <div>
+                        <select
+                            name="supplierId"
+                            value={product.supplierId}
+                            onChange={handleSupplierChange}
+                        >
+                            <option value="">Select a supplier</option>
+                            {suppliers.map((supplier) => (
+                                <option key={supplier.id} value={supplier.id}>
+                                    {supplier.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-                <Button variant="contained" className='btn' type="button" onClick={handleClick}>
-                    Add Product
-                </Button>
+                <ButtonGroup variant="contained" className='btngrp'>
+                    <Button variant="contained" className='btn' type="button" onClick={handleClick}>
+                        Add Product
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
             </form>
         </>
     );

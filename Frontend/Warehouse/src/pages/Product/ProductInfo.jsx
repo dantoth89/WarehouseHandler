@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
+import Navbar from '../Navbar';
+
+
 
 function ProductUpdate() {
     const { id } = useParams();
@@ -64,41 +68,54 @@ function ProductUpdate() {
             });
     };
 
-    return (
-        <div className="updateProductContainer">
-            <h2 className="titles">Update Product</h2>
-            <form>
-                <div>
+    const handleBack = () => {
+        window.location.href = `/products`;
+    }
+
+    return (<>
+        <Navbar />{Navbar}
+        <div>
+            <h2 className="titles">Product Info</h2>
+            <form className="info-container">
+                <div className='info-fields'>
                     <label>Name:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={updatedProduct.name}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
+                    <div>
+                        <input
+                            type="text"
+                            name="name"
+                            value={updatedProduct.name}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <label>SKU:</label>
-                    <input
-                        type="text"
-                        name="sku"
-                        value={updatedProduct.sku}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
+                    <div>
+                        <input
+                            type="text"
+                            name="sku"
+                            value={updatedProduct.sku}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <label>Description:</label>
-                    <textarea
-                        name="description"
-                        value={updatedProduct.description}
-                        onChange={handleInputChange}
-                    />
+                    <div>
+                        <textarea
+                            name="description"
+                            value={updatedProduct.description}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </div>
-                <Button variant="contained" className='btn' type="button" onClick={handleUpdateClick}>
-                    Update
-                </Button>
+                <ButtonGroup variant="contained" className='btngrp'>
+                    <Button variant="contained" className='btn' type="button" onClick={handleUpdateClick}>
+                        Update
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
             </form>
         </div>
+    </>
     );
 }
 

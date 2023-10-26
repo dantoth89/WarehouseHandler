@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
+import Navbar from '../Navbar';
+
+
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -98,15 +101,17 @@ function ProductList() {
         window.location.href = `/addproduct`;
     };
 
-    return (
-        <div className="list-Container">
+    return (<>
+        <Navbar />{Navbar}
+        <div className="list-container">
             <h2 className="titles">Products</h2>
-            <Button
-                variant="contained"
-                className="btn"
-                onClick={() => handleAddClick()}>
-                Add Supplier
-            </Button>
+            <div className="addbtn">
+                <Button
+                    variant="contained"
+                    onClick={() => handleAddClick()}>
+                    Add Product
+                </Button>
+            </div>
             <div className="search-container">
                 <input
                     type="text"
@@ -153,24 +158,27 @@ function ProductList() {
                             <td>{product.sku}</td>
                             <td>{product.description}</td>
                             <td onClick={() => toSupplierPage(product.supplier.id)}>{product.supplier.name}</td>
-                            <td>
-                                <Button
-                                    variant="contained"
-                                    className="btn"
-                                    onClick={() => handleInfoClick(product.id)}>
-                                    Info
-                                </Button>
-                                <Button variant="contained" className='btn'
-                                    onClick={() => handleDeleteClick(product.id)}
-                                >
-                                    Delete
-                                </Button>
+                            <td className='action-container'>
+                                <ButtonGroup variant="contained" className='btngrp'>
+                                    <Button
+                                        variant="contained"
+                                        className="btn"
+                                        onClick={() => handleInfoClick(product.id)}>
+                                        Info
+                                    </Button>
+                                    <Button variant="contained" className='btn'
+                                        onClick={() => handleDeleteClick(product.id)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </ButtonGroup>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
+    </>
     );
 }
 
