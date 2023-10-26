@@ -8,4 +8,6 @@ public interface IOrderService
     public Task GenerateOrder(OrderDTO orderDto);
 
     public Task<List<Order>> GetOrders();
+
+    public Task<Order> GetOrder(long orderId);
 }

@@ -71,4 +71,17 @@ public class OrderService : IOrderService
         var orders = await _warehouseContext.Orders.ToListAsync();
         return orders;
     }
+    
+    public async Task<Order> GetOrder(long orderId)
+    {
+        var order = await _warehouseContext.Orders
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+
+        if (order == null)
+        {
+            throw new ArgumentException($"Order with Id {orderId} does not exist");
+        }
+
+        return order;
+    }
 }
