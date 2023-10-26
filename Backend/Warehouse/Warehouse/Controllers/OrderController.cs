@@ -5,6 +5,7 @@ using Warehouse.Services;
 
 namespace Warehouse.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class OrderController : ControllerBase
@@ -22,6 +23,21 @@ public class OrderController : ControllerBase
         try
         {
             var orders = await _orderService.GetOrders();
+            return Ok(orders);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetOrder(int id)
+    {
+        try
+        {
+            var orders = await _orderService.GetOrder(id);
             return Ok(orders);
         }
         catch (Exception e)
