@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
+import Navbar from '../Navbar';
+
 
 function LocationList() {
     const [locations, setLocations] = useState([]);
@@ -47,12 +49,16 @@ function LocationList() {
     };
 
     const handleDeleteClick = (id) => {
-        const shouldDelete = window.confirm(
-            'Are you sure you want to delete this location?'
-        );
+        const isLocationInUse = usedLocations.some((usedLocation) => usedLocation.id === id);
 
-        if (shouldDelete) {
-            deleteLocation(id);
+        if (isLocationInUse) {
+            alert('This location is in use and cannot be deleted.');
+        } else {
+            const shouldDelete = window.confirm('Are you sure you want to delete this location?');
+
+            if (shouldDelete) {
+                deleteLocation(id);
+            }
         }
     };
 
@@ -101,15 +107,18 @@ function LocationList() {
         window.location.href = `/addlocation`;
     };
 
-    return (
-        <div className="list-Container">
+    return (<>
+        <Navbar />
+        <div className="list-container">
             <h2 className="titles">Locations</h2>
-            <Button
-                variant="contained"
-                className="btn"
-                onClick={() => handleAddClick()}>
-                Add Location
-            </Button>
+            <div className="addbtn">
+                <Button
+                    variant="contained"
+                    className="addbtn"
+                    onClick={() => handleAddClick()}>
+                    Add Location
+                </Button>
+            </div>
             <div className="search-container">
                 <input
                     type="text"
@@ -146,28 +155,31 @@ function LocationList() {
                                 <td>{location.id}</td>
                                 <td>{location.locationCode}</td>
                                 <td>{location.notes}</td>
-                                <td>
+                                <td style={{ textAlign: 'center' }}>
                                     {usedLocations.some(usedLocation => usedLocation.id === location.id) ? 'X' : '-'}
                                 </td>
                                 <td>
-                                    <Button
-                                        variant="contained"
-                                        className="btn"
-                                        onClick={() => handleInfoClick(location.id)}>
-                                        Info
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        className='btn'
-                                        onClick={() => handleDeleteClick(location.id)}>
-                                        Delete
-                                    </Button>
+                                    <ButtonGroup variant="contained" className='btngrp'>
+                                        <Button
+                                            variant="contained"
+                                            className="btn"
+                                            onClick={() => handleInfoClick(location.id)}>
+                                            Info
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            className='btn'
+                                            onClick={() => handleDeleteClick(location.id)}>
+                                            Delete
+                                        </Button>
+                                    </ButtonGroup>
                                 </td>
                             </tr>
                         ))}
                 </tbody>
             </table>
         </div>
+    </>
     );
 }
 

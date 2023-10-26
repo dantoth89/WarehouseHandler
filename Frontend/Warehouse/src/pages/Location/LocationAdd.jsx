@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
+import Navbar from '../Navbar';
+
 
 function LocationAdd() {
     const [location, setLocation] = useState({
@@ -14,6 +17,10 @@ function LocationAdd() {
             [name]: value,
         });
     };
+
+    const handleBack = () => {
+        window.location.href = `/locations`;
+    }
 
     const handleAddLocation = () => {
         const token = localStorage.getItem('jwtToken');
@@ -40,29 +47,37 @@ function LocationAdd() {
 
     return (
         <>
-            <h2>Add Location</h2>
-            <form>
-                <div>
+            <Navbar />{Navbar}
+            <h2 className='titles'> Add Location </h2>
+            <form className="info-container">
+                <div className='info-fields'>
                     <label>Location Code:</label>
-                    <input
-                        type="text"
-                        name="locationCode"
-                        value={location.locationCode}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
+                    <div>
+                        <input
+                            type="text"
+                            name="locationCode"
+                            value={location.locationCode}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <label>Notes:</label>
-                    <textarea
-                        type="text"
-                        name="notes"
-                        value={location.notes}
-                        onChange={handleInputChange}
-                    />
+                    <div>
+                        <textarea
+                            type="text"
+                            name="notes"
+                            value={location.notes}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </div>
-                <Button variant="contained" className='btn' type="button" onClick={handleAddLocation}>
-                    Add Location
-                </Button>
+                <ButtonGroup variant="contained" className='btngrp'>
+                    <Button variant="contained" className='btn' type="button" onClick={handleAddLocation}>
+                        Add Location
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
             </form>
         </>
     );

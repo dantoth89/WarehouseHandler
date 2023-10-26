@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
+import Navbar from '../Navbar';
+
 
 function LocationInfo() {
     const { id } = useParams();
@@ -64,33 +66,43 @@ function LocationInfo() {
             });
     };
 
+    const handleBack = () => {
+        window.location.href = `/locations`;
+    }
+
     return (
         <>
-            <h2>Location Info</h2>
-            <form>
-                <div>
+            <Navbar />{Navbar}
+            <h2 className="titles">Location Info</h2>
+            <form className='info-container'>
+                <div className='info-fields'>
                     <label>Location Code:</label>
-                    <input
-                        type="text"
-                        name="locationCode"
-                        value={location.locationCode}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
+                    <div>
+                        <input
+                            type="text"
+                            name="locationCode"
+                            value={location.locationCode}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <label>Notes:</label>
-                    <textarea
-                        name="notes"
-                        value={location.notes}
-                        onChange={handleInputChange}
-                    />
+                    <div>
+                        <textarea
+                            name="notes"
+                            value={location.notes}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </div>
-                <Button variant="contained" className='btn' type="button" onClick={handleUpdate}>
-                    Update Location
-                </Button>
-                <Link to={`/locations/`}>
-                    Back
-                </Link>
+                <ButtonGroup variant="contained" className='btngrp'>
+
+                    <Button variant="contained" className='btn' type="button" onClick={handleUpdate}>
+                        Update Location
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
             </form>
         </>
     );
