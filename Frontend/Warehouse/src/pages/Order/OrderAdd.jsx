@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
+import Navbar from '../Navbar';
+
 
 function OrderAdd() {
     const [inventories, setInventories] = useState([]);
@@ -77,40 +79,59 @@ function OrderAdd() {
         fetchInventories();
     }, []);
 
-    return (
-        <div className="orderAddContainer">
+    const handleBack = () => {
+        window.location.href = `/orders`;
+    }
+
+    return (<>
+        <Navbar />{Navbar}
+        <div>
             <h2 className="titles">Add Order</h2>
-            <div>
-                <h3>Select Inventories:</h3>
-                {inventories.map((inventory) => (
-                    <div key={inventory.id}>
-                        <label>
-                            {inventory.product.name} ({inventory.product.sku})
-                        </label>
-                        <input
-                            type="number"
-                            min="0"
-                            max={maxAvailableQuantity(inventory)}
-                            value={selectedInventories[inventory.id] || 0}
-                            onChange={(e) =>
-                                handleInventoryChange(inventory.id, parseInt(e.target.value, 10))
-                            }
+            <form className="info-container">
+                <div className='info-fields'>
+                    <label>Order Notes:</label>
+                    <div>
+                        <textarea
+                            value={orderNotes}
+                            onChange={(e) => setOrderNotes(e.target.value)}
                         />
-                        <span>Max: {maxAvailableQuantity(inventory)}</span>
                     </div>
-                ))}
-            </div>
-            <div>
-                <h3>Order Notes:</h3>
-                <textarea
-                    value={orderNotes}
-                    onChange={(e) => setOrderNotes(e.target.value)}
-                />
-            </div>
-            <Button variant="contained" className='btn' onClick={handleSubmit} disabled={loading}>
-                Create Order
-            </Button>
+                    <label>Select Inventories:</label>
+                    <div>---------------------</div>
+                    <div>
+                        {inventories.map((inventory) => (
+                            <div key={inventory.id}>
+                                <label>
+                                    {inventory.product.name} ({inventory.product.sku})
+                                </label>
+                                <div>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        max={maxAvailableQuantity(inventory)}
+                                        value={selectedInventories[inventory.id] || 0}
+                                        onChange={(e) =>
+                                            handleInventoryChange(inventory.id, parseInt(e.target.value, 10))
+                                        }
+                                    />
+                                    <div>Max: {maxAvailableQuantity(inventory)}</div>
+                                    <div>---------------------</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <ButtonGroup variant="contained" className='btngrp'>
+                    <Button variant="contained" className='btn' onClick={handleSubmit} disabled={loading}>
+                        Create Order
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
+            </form>
         </div>
+    </>
     );
 }
 

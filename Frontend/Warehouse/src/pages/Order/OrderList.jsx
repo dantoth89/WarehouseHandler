@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Navbar from '../Navbar';
+
 
 function OrderList() {
     const [orders, setOrders] = useState([]);
@@ -32,41 +33,53 @@ function OrderList() {
         window.location.href = `/addorder`;
     };
 
+    const handleInfoClick = (id) => {
+        window.location.href = `/orderinfo/${id}`;
+    };
+
+
     return (
-        <div className="list-Container">
-            <h2 className="titles">Orders</h2>
-            <Button
-                variant="contained"
-                className="btn"
-                onClick={() => handleAddClick()}>
-                Add Order
-            </Button>            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Order Notes</th>
-                        <th>Order Date</th>
-                        <th>Order Summary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders.map((order) => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order.orderNotes}</td>
-                            <td>{new Date(order.orderDate).toLocaleString()}</td>
-                            <td>
-                                <tr>
-                                    {order.orderSummary.split('------------------------------').map((item, index) => (
-                                        <td key={index}>{item.trim()}</td>
-                                    ))}
-                                </tr>
-                            </td>
+        <>
+            <Navbar />{Navbar}
+            <div className="list-container">
+                <h2 className="titles">Orders</h2>
+                <div className="addbtn">
+                    <Button
+                        variant="contained"
+                        className="addbtn"
+                        onClick={() => handleAddClick()}>
+                        Add Order
+                    </Button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Notes</th>
+                            <th>Date</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {orders.map((order) => (
+                            <tr key={order.id}>
+                                <td>{order.id}</td>
+                                <td>{order.orderNotes}</td>
+                                <td>{new Date(order.orderDate).toLocaleString()}</td>
+                                <td className='btngrp'>
+                                    <Button
+                                        variant="contained"
+                                        className="btn"
+                                        onClick={() => handleInfoClick(order.id)}>
+                                        Info
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }
 
