@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-
+import { ButtonGroup } from '@mui/material';
+import Navbar from '../Navbar';
 
 function InventoryInfo() {
     const { id } = useParams();
@@ -109,47 +109,56 @@ function InventoryInfo() {
             });
     };
 
+    const handleBack = () => {
+        window.location.href = `/inventories`;
+    }
+
     return (
         <>
-            <h2>Inventory Info</h2>
-            <div>
-                <label>Product: {inventory.product.name}</label>
-            </div>
-            <form>
-                <div>
-                    <select
-                        name="locationId"
-                        value={inventory.locationId}
-                        onChange={(e) =>
-                            setInventory({ ...inventory, locationId: e.target.value })
-                        }
-                    >
-                        <option>{getLocation(inventory.locationId)}</option>
-                        {unusedlocations.map((location) => (
-                            <option key={location.id} value={location.id}>
-                                {location.locationCode}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
+            <Navbar />{Navbar}
+            <h2 className='titles'>Inventory Info</h2>
+            <label className='titles' >Product:</label>
+            <label className='titles' >{inventory.product.name}</label>
+            <form className='info-container'>
+                <div className='info-fields'>
+                    <label>Locaton: </label>
+                    <div>
+                        <select
+                            name="locationId"
+                            value={inventory.locationId}
+                            onChange={(e) =>
+                                setInventory({ ...inventory, locationId: e.target.value })
+                            }
+                        >
+                            <option>{getLocation(inventory.locationId)}</option>
+                            {unusedlocations.map((location) => (
+                                <option key={location.id} value={location.id}>
+                                    {location.locationCode}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <label>Quantity:</label>
-                    <input
-                        type="number"
-                        name="quantity"
-                        value={inventory.quantity}
-                        onChange={(e) =>
-                            setInventory({ ...inventory, quantity: parseInt(e.target.value) })
-                        }
-                    />
+                    <div>
+                        <input
+                            type="number"
+                            name="quantity"
+                            value={inventory.quantity}
+                            onChange={(e) =>
+                                setInventory({ ...inventory, quantity: parseInt(e.target.value) })
+                            }
+                        />
+                    </div>
                 </div>
                 {error && <p className="error">{error}</p>}
-                <Button variant="contained" className='btn' type="button" onClick={handleUpdate}>
-                    Update Inventory
-                </Button>
-                <Link to={`/inventories`}>
-                    Back
-                </Link>
+                <ButtonGroup variant="contained" className='btngrp'>
+                    <Button variant="contained" className='btn' type="button" onClick={handleUpdate}>
+                        Update Inventory
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
             </form>
         </>
     );

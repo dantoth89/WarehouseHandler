@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
+import Navbar from '../Navbar';
 
 function InventoryList() {
     const [inventory, setInventory] = useState([]);
@@ -131,71 +132,79 @@ function InventoryList() {
     };
 
     return (
-        <div className="list-Container">
-            <h2 className="titles">Inventory</h2>
-            <Button
-                variant="contained"
-                className="btn"
-                onClick={() => handleAddClick()}>
-                Add Inventory
-            </Button>            <div className="search-container">
-                <input
-                    type="text"
-                    placeholder="Product Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="SKU"
-                    value={sku}
-                    onChange={(e) => setSku(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-                <Button variant="contained" className='btn' onClick={resetSearch}>Reset Search</Button>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Product Name</th>
-                        <th>SKU</th>
-                        <th>Description</th>
-                        <th>Location</th>
-                        <th>Quantity</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {inventory.map((item) => (
-                        <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.product.name}</td>
-                            <td>{item.product.sku}</td>
-                            <td>{item.product.description}</td>
-                            <td>{getLocation(item.locationId)}</td>
-                            <td>{item.quantity}</td>
-                            <td>
-                                <Button
-                                    variant="contained"
-                                    className="btn"
-                                    onClick={() => handleInfoClick(item.id)}>
-                                    Info
-                                </Button>
-                                <Button variant="contained" className='btn' onClick={() => handleDeleteClick(item.id)}>
-                                    Delete
-                                </Button>
-                            </td>
+        <>
+            <Navbar />{Navbar}
+            <div className="list-container">
+                <h2 className="titles">Inventory</h2>
+                <div className="addbtn">
+                    <Button
+                        variant="contained"
+                        className="addbtn"
+                        onClick={() => handleAddClick()}>
+                        Add Inventory
+                    </Button>
+                </div>
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Product Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="SKU"
+                        value={sku}
+                        onChange={(e) => setSku(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <Button variant="contained" className='btn' onClick={resetSearch}>Reset Search</Button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Product Name</th>
+                            <th>SKU</th>
+                            <th>Description</th>
+                            <th>Location</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {inventory.map((item) => (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.product.name}</td>
+                                <td>{item.product.sku}</td>
+                                <td>{item.product.description}</td>
+                                <td>{getLocation(item.locationId)}</td>
+                                <td>{item.quantity}</td>
+                                <td>
+                                    <ButtonGroup variant="contained" className='btngrp'>
+                                        <Button
+                                            variant="contained"
+                                            className="btn"
+                                            onClick={() => handleInfoClick(item.id)}>
+                                            Info
+                                        </Button>
+                                        <Button variant="contained" className='btn' onClick={() => handleDeleteClick(item.id)}>
+                                            Delete
+                                        </Button>
+                                    </ButtonGroup>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }
 

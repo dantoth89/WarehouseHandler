@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-
+import { ButtonGroup } from '@mui/material';
+import Navbar from '../Navbar';
 
 function InventoryAdd() {
     const [inventory, setInventory] = useState({
@@ -87,56 +87,66 @@ function InventoryAdd() {
             });
     }, []);
 
+    const handleBack = () => {
+        window.location.href = `/inventories`;
+    }
+
     return (
         <>
-            <h2>Add Inventory</h2>
-            <form>
-                <div>
+            <Navbar />{Navbar}
+            <h2 className='titles'>Add Inventory</h2>
+            <form className='info-container'>
+                <div className='info-fields'>
                     <label>Product:</label>
-                    <select
-                        name="productId"
-                        value={inventory.productId}
-                        onChange={handleInputChange}
-                    >
-                        <option value="">Select a product</option>
-                        {products.map((product) => (
-                            <option key={product.id} value={product.id}>
-                                {product.id} - {product.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
+                    <div>
+                        <select
+                            name="productId"
+                            value={inventory.productId}
+                            onChange={handleInputChange}
+                        >
+                            <option value="">Select a product</option>
+                            {products.map((product) => (
+                                <option key={product.id} value={product.id}>
+                                    {product.id} - {product.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <label>Location:</label>
-                    <select
-                        name="locationId"
-                        value={inventory.locationId}
-                        onChange={handleInputChange}
-                    >
-                        <option value="">Select a location</option>
-                        {locations.map((location) => (
-                            <option key={location.id} value={location.id}>
-                                {location.id} - {location.locationCode}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
+                    <div>
+                        <select
+                            name="locationId"
+                            value={inventory.locationId}
+                            onChange={handleInputChange}
+                        >
+                            <option value="">Select a location</option>
+                            {locations.map((location) => (
+                                <option key={location.id} value={location.id}>
+                                    {location.id} - {location.locationCode}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <label>Quantity:</label>
-                    <input
-                        type="number"
-                        name="quantity"
-                        value={inventory.quantity}
-                        onChange={handleInputChange}
-                    />
+                    <div>
+                        <input
+                            type="number"
+                            name="quantity"
+                            value={inventory.quantity}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </div>
                 {error && <p className="error">{error}</p>}
-                <Button variant="contained" className='btn' type="button" onClick={handleAddInventory}>
-                    Add Inventory
-                </Button>
-                <Link to={`/inventories`}>
-                    Back
-                </Link>
+                <ButtonGroup variant="contained" className='btngrp'>
+
+                    <Button variant="contained" className='btn' type="button" onClick={handleAddInventory}>
+                        Add Inventory
+                    </Button>
+                    <Button className='btn' type="button" onClick={handleBack}>
+                        Back
+                    </Button>
+                </ButtonGroup>
             </form>
         </>
     );
