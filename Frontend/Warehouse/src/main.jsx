@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import Login from './pages/Login.jsx'
-import Navbar from "./pages/Navbar.jsx";
 
 import SupplierList from "./pages/Supplier/SupplierList.jsx";
 import SupplierAdd from "./pages/Supplier/SupplierAdd.jsx";
