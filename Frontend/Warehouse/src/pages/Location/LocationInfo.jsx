@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Navbar from '../Navbar';
 import Button from '@mui/material/Button';
 import { ButtonGroup } from '@mui/material';
-import Navbar from '../Navbar';
 
 
 function LocationInfo() {
@@ -72,7 +72,7 @@ function LocationInfo() {
 
     return (
         <>
-            <Navbar />{Navbar}
+            <Navbar />
             <h2 className="titles">Location Info</h2>
             <form className='info-container'>
                 <div className='info-fields'>
