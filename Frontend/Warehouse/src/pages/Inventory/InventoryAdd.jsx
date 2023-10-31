@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from '../Navbar';
 import Button from '@mui/material/Button';
 import { ButtonGroup } from '@mui/material';
-import Navbar from '../Navbar';
 
 function InventoryAdd() {
     const [inventory, setInventory] = useState({
@@ -52,8 +52,7 @@ function InventoryAdd() {
             });
     };
 
-    useEffect(() => {
-        const token = localStorage.getItem('jwtToken');
+    const fetchProducts = (token) => {
         fetch('http://localhost:5213/product', {
             method: 'GET',
             headers: {
@@ -69,7 +68,9 @@ function InventoryAdd() {
             .catch((error) => {
                 console.error(error);
             });
+    };
 
+    const fetchLocations = (token) => {
         fetch('http://localhost:5213/inventory/unusedlocations', {
             method: 'GET',
             headers: {
@@ -85,15 +86,21 @@ function InventoryAdd() {
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
+    };
 
     const handleBack = () => {
         window.location.href = `/inventories`;
     }
 
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        fetchProducts(token);
+        fetchLocations(token);
+    }, []);
+
     return (
         <>
-            <Navbar />{Navbar}
+            <Navbar />
             <h2 className='titles'>Add Inventory</h2>
             <form className='info-container'>
                 <div className='info-fields'>

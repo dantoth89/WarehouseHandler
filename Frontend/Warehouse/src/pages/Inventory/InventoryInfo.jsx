@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Navbar from '../Navbar';
 import Button from '@mui/material/Button';
 import { ButtonGroup } from '@mui/material';
-import Navbar from '../Navbar';
 
 function InventoryInfo() {
     const { id } = useParams();
@@ -16,9 +16,7 @@ function InventoryInfo() {
     const [unusedlocations, setUnusedLocations] = useState([]);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const token = localStorage.getItem('jwtToken');
-
+    const fetchInventory = (token) => {
         fetch(`http://localhost:5213/inventory/${id}`, {
             method: 'GET',
             headers: {
@@ -38,7 +36,9 @@ function InventoryInfo() {
             .catch((error) => {
                 console.error(error);
             });
+    };
 
+    const fetchLocations = (token) => {
         fetch('http://localhost:5213/location', {
             method: 'GET',
             headers: {
@@ -53,7 +53,9 @@ function InventoryInfo() {
             .catch((error) => {
                 console.error(error);
             });
+    };
 
+    const fetchUnusedLocations = (token) => {
         fetch('http://localhost:5213/inventory/unusedlocations', {
             method: 'GET',
             headers: {
@@ -69,7 +71,7 @@ function InventoryInfo() {
             .catch((error) => {
                 console.error(error);
             });
-    }, [id]);
+    };
 
     const getLocation = (id) => {
         const location = locations.find((loc) => loc.id === id);
@@ -113,9 +115,16 @@ function InventoryInfo() {
         window.location.href = `/inventories`;
     }
 
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        fetchInventory(token);
+        fetchLocations(token);
+        fetchUnusedLocations(token);
+    }, [id]);
+
     return (
         <>
-            <Navbar />{Navbar}
+            <Navbar />
             <h2 className='titles'>Inventory Info</h2>
             <label className='titles' >Product:</label>
             <label className='titles' >{inventory.product.name}</label>

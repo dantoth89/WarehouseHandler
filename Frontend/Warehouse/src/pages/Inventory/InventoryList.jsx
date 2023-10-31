@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonGroup } from '@mui/material';
-import Button from '@mui/material/Button';
 import Navbar from '../Navbar';
+import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
 
 function InventoryList() {
     const [inventory, setInventory] = useState([]);
@@ -10,19 +10,9 @@ function InventoryList() {
     const [sku, setSku] = useState('');
     const [description, setDescription] = useState('');
 
-    useEffect(() => {
-        const filtered = inventory.filter((item) =>
-            (name === '' || item.product.name.toLowerCase().includes(name.toLowerCase())) &&
-            (sku === '' || item.product.sku.toLowerCase().includes(sku.toLowerCase())) &&
-            (description === '' || item.product.description.toLowerCase().includes(description.toLowerCase()))
-        );
-        setInventory(filtered);
-    }, [name, sku, description]);
 
 
-    const inventoryList = () => {
-        const token = localStorage.getItem('jwtToken');
-
+    const inventoryList = (token) => {
         fetch('http://localhost:5213/inventory', {
             method: 'GET',
             headers: {
@@ -39,9 +29,7 @@ function InventoryList() {
             });
     };
 
-    const locationList = () => {
-        const token = localStorage.getItem('jwtToken');
-
+    const locationList = (token) => {
         fetch('http://localhost:5213/location', {
             method: 'GET',
             headers: {
@@ -68,24 +56,6 @@ function InventoryList() {
         }
     }
 
-    useEffect(() => {
-        const filtered = inventory.filter((item) =>
-            (name === '' || item.product.name.toLowerCase().includes(name.toLowerCase())) &&
-            (sku === '' || item.product.sku.toLowerCase().includes(sku.toLowerCase())) &&
-            (description === '' || item.product.description.toLowerCase().includes(description.toLowerCase()))
-        );
-        setInventory(filtered);
-    }, [name, sku, description]);
-
-    const handleDeleteClick = (id) => {
-        const shouldDelete = window.confirm(
-            'Are you sure you want to delete this inventory?'
-        );
-
-        if (shouldDelete) {
-            deleteInventory(id);
-        }
-    };
 
     const deleteInventory = (id) => {
         const token = localStorage.getItem('jwtToken');
@@ -111,17 +81,15 @@ function InventoryList() {
             });
     };
 
-    const resetSearch = () => {
-        setName('');
-        setSku('');
-        setDescription('');
-        inventoryList();
-    };
+    const handleDeleteClick = (id) => {
+        const shouldDelete = window.confirm(
+            'Are you sure you want to delete this inventory?'
+        );
 
-    useEffect(() => {
-        inventoryList();
-        locationList();
-    }, []);
+        if (shouldDelete) {
+            deleteInventory(id);
+        }
+    };
 
     const handleInfoClick = (id) => {
         window.location.href = `/inventoryinfo/${id}`;
@@ -131,9 +99,31 @@ function InventoryList() {
         window.location.href = `/addinventory`;
     };
 
+    const resetSearch = () => {
+        setName('');
+        setSku('');
+        setDescription('');
+        inventoryList();
+    };
+
+    useEffect(() => {
+        const filtered = inventory.filter((item) =>
+            (name === '' || item.product.name.toLowerCase().includes(name.toLowerCase())) &&
+            (sku === '' || item.product.sku.toLowerCase().includes(sku.toLowerCase())) &&
+            (description === '' || item.product.description.toLowerCase().includes(description.toLowerCase()))
+        );
+        setInventory(filtered);
+    }, [name, sku, description]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        inventoryList(token);
+        locationList(token);
+    }, []);
+
     return (
         <>
-            <Navbar />{Navbar}
+            <Navbar />
             <div className="list-container">
                 <h2 className="titles">Inventory</h2>
                 <div className="addbtn">
