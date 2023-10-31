@@ -66,7 +66,6 @@ function InventoryInfo() {
             .then((res) => res.json())
             .then((data) => {
                 setUnusedLocations(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error(error);

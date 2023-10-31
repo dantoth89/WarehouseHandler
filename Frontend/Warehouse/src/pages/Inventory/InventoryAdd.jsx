@@ -63,7 +63,6 @@ function InventoryAdd() {
             .then((res) => res.json())
             .then((data) => {
                 setProducts(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error(error);
@@ -81,7 +80,6 @@ function InventoryAdd() {
             .then((res) => res.json())
             .then((data) => {
                 setLocations(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error(error);
