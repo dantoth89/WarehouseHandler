@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
 import Navbar from '../Navbar';
+import Button from '@mui/material/Button';
 
 
 function OrderList() {
@@ -25,10 +25,6 @@ function OrderList() {
             });
     };
 
-    useEffect(() => {
-        fetchOrders();
-    }, []);
-
     const handleAddClick = () => {
         window.location.href = `/addorder`;
     };
@@ -37,10 +33,13 @@ function OrderList() {
         window.location.href = `/orderinfo/${id}`;
     };
 
+    useEffect(() => {
+        fetchOrders();
+    }, []);
 
     return (
         <>
-            <Navbar />{Navbar}
+            <Navbar />
             <div className="list-container">
                 <h2 className="titles">Orders</h2>
                 <div className="addbtn">

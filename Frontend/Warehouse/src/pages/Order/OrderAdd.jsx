@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonGroup } from '@mui/material';
-import Button from '@mui/material/Button';
 import Navbar from '../Navbar';
+import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
 
 
 function OrderAdd() {
@@ -10,9 +10,7 @@ function OrderAdd() {
     const [orderNotes, setOrderNotes] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const fetchInventories = () => {
-        const token = localStorage.getItem('jwtToken');
-
+    const fetchInventories = (token) => {
         fetch('http://localhost:5213/inventory', {
             method: 'GET',
             headers: {
@@ -75,16 +73,17 @@ function OrderAdd() {
             });
     };
 
-    useEffect(() => {
-        fetchInventories();
-    }, []);
-
     const handleBack = () => {
         window.location.href = `/orders`;
     }
 
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        fetchInventories(token);
+    }, []);
+
     return (<>
-        <Navbar />{Navbar}
+        <Navbar />
         <div>
             <h2 className="titles">Add Order</h2>
             <form className="info-container">
