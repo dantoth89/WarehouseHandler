@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonGroup } from '@mui/material';
-import Button from '@mui/material/Button';
 import Navbar from '../Navbar';
+import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
 
 
 function ProductAdd() {
@@ -52,6 +52,10 @@ function ProductAdd() {
             });
     };
 
+    const handleBack = () => {
+        window.location.href = `/products`;
+    }
+
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
         fetch('http://localhost:5213/supplier', {
@@ -70,13 +74,9 @@ function ProductAdd() {
             });
     }, []);
 
-    const handleBack = () => {
-        window.location.href = `/products`;
-    }
-
     return (
         <>
-            <Navbar />{Navbar}
+            <Navbar />
             <form className="info-container">
                 <div className='info-fields'>
                     <label>Name:</label>

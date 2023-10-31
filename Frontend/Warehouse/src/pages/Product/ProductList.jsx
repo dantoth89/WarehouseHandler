@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import Navbar from '../Navbar';
 import Button from '@mui/material/Button';
 import { ButtonGroup } from '@mui/material';
-import Navbar from '../Navbar';
-
-
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -30,21 +28,6 @@ function ProductList() {
                 console.error(error);
             });
     };
-
-    useEffect(() => {
-        productList();
-    }, []);
-
-    useEffect(() => {
-        const filtered = products.filter((product) =>
-            (name === '' || product.name.toLowerCase().includes(name.toLowerCase())) &&
-            (sku === '' || product.sku.toLowerCase().includes(sku.toLowerCase())) &&
-            (description === '' || product.description.toLowerCase().includes(description.toLowerCase())) &&
-            (supplier === '' || product.supplier.toLowerCase().includes(supplier.toLowerCase()))
-        );
-        setProducts(filtered);
-    }, [name, sku, description, supplier]);
-
 
     const handleDeleteClick = (id) => {
         const shouldDelete = window.confirm(
@@ -92,7 +75,6 @@ function ProductList() {
         productList();
     };
 
-
     const handleInfoClick = (id) => {
         window.location.href = `/productinfo/${id}`;
     };
@@ -101,8 +83,22 @@ function ProductList() {
         window.location.href = `/addproduct`;
     };
 
+    useEffect(() => {
+        const filtered = products.filter((product) =>
+            (name === '' || product.name.toLowerCase().includes(name.toLowerCase())) &&
+            (sku === '' || product.sku.toLowerCase().includes(sku.toLowerCase())) &&
+            (description === '' || product.description.toLowerCase().includes(description.toLowerCase())) &&
+            (supplier === '' || product.supplier.toLowerCase().includes(supplier.toLowerCase()))
+        );
+        setProducts(filtered);
+    }, [name, sku, description, supplier]);
+
+    useEffect(() => {
+        productList();
+    }, []);
+
     return (<>
-        <Navbar />{Navbar}
+        <Navbar />
         <div className="list-container">
             <h2 className="titles">Products</h2>
             <div className="addbtn">

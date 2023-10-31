@@ -73,7 +73,7 @@ function ProductUpdate() {
     }
 
     return (<>
-        <Navbar />{Navbar}
+        <Navbar />
         <div>
             <h2 className="titles">Product Info</h2>
             <form className="info-container">
