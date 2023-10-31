@@ -73,7 +73,7 @@ function SupplierInfo() {
 
     return (
         <>
-            <Navbar />{Navbar}
+            <Navbar />
             <h2 className="titles">Supplier Info</h2>
             <form className="info-container">
                 <div className='info-fields'>

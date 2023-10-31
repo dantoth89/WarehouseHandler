@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from '../Navbar';
 import Button from '@mui/material/Button';
 import { ButtonGroup } from '@mui/material';
-import Navbar from '../Navbar';
 
 
 function SupplierAdd() {
@@ -47,7 +47,7 @@ function SupplierAdd() {
     }
 
     return <>
-        <Navbar />{Navbar}
+        <Navbar />
         <h2 className="titles">Add supplier</h2>
         <form className="info-container">
             <div className='info-fields'>

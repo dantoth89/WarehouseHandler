@@ -31,20 +31,6 @@ function SupplierList() {
             });
     };
 
-    useEffect(() => {
-        supplierList();
-    }, []);
-
-    useEffect(() => {
-        const filtered = suppliers.filter((supplier) =>
-            (searchValues.name === '' || supplier.name.toLowerCase().includes(searchValues.name.toLowerCase())) &&
-            (searchValues.description === '' || supplier.description.toLowerCase().includes(searchValues.description.toLowerCase())) &&
-            (searchValues.contactPhone === '' || supplier.contactPhone.toLowerCase().includes(searchValues.contactPhone.toLowerCase())) &&
-            (searchValues.contactEmail === '' || supplier.contactEmail.toLowerCase().includes(searchValues.contactEmail.toLowerCase()))
-        );
-        setSuppliers(filtered);
-    }, [searchValues]);
-
     const handleDeleteClick = (id) => {
         const shouldDelete = window.confirm(
             'Are you sure you want to delete this supplier?'
@@ -97,8 +83,22 @@ function SupplierList() {
         window.location.href = `/addsupplier`;
     };
 
+    useEffect(() => {
+        const filtered = suppliers.filter((supplier) =>
+            (searchValues.name === '' || supplier.name.toLowerCase().includes(searchValues.name.toLowerCase())) &&
+            (searchValues.description === '' || supplier.description.toLowerCase().includes(searchValues.description.toLowerCase())) &&
+            (searchValues.contactPhone === '' || supplier.contactPhone.toLowerCase().includes(searchValues.contactPhone.toLowerCase())) &&
+            (searchValues.contactEmail === '' || supplier.contactEmail.toLowerCase().includes(searchValues.contactEmail.toLowerCase()))
+        );
+        setSuppliers(filtered);
+    }, [searchValues]);
+
+    useEffect(() => {
+        supplierList();
+    }, []);
+
     return (<>
-        <Navbar />{Navbar}
+        <Navbar />
         <div className="list-container">
             <h2 className="titles">Suppliers</h2>
             <div className="addbtn">
