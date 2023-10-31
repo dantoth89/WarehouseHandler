@@ -23,6 +23,15 @@ body {
   min-height: 100vh;
 }
 
+.titles{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 24px;
+  margin-bottom: 5px;
+  justify-content: center;
+}
+
 .login-container{
   display: flex;
   justify-content: center;
@@ -53,15 +62,6 @@ body {
   border-radius: 10px;
   justify-content: space-between;
   background-color: #5c5c5c;
-}
-
-.titles{
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  font-size: 24px;
-  margin-bottom: 5px;
-  justify-content: center;
 }
 
 .list-container {
