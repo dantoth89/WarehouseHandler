@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Warehouse.Models.DTO;
 using Warehouse.Services;
-using Warehouse.Models.Entities;
 
 namespace Warehouse.Controllers;
 
