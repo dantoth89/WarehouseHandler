@@ -16,6 +16,12 @@ public class OrderService : IOrderService
         _warehouseContext = warehouseContext;
         _logService = logService;
     }
+
+    private void CheckOrder(Order order)
+    {
+        if (order == null)
+            throw new ArgumentException($"Order does not exist");
+    }
     
     public async Task GenerateOrder(OrderDTO orderDto)
     {
@@ -77,10 +83,7 @@ public class OrderService : IOrderService
         var order = await _warehouseContext.Orders
             .FirstOrDefaultAsync(o => o.Id == orderId);
 
-        if (order == null)
-        {
-            throw new ArgumentException($"Order with Id {orderId} does not exist");
-        }
+        CheckOrder(order);
 
         return order;
     }
