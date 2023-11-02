@@ -12,15 +12,18 @@ public class SupplierService : ISupplierService
     {
         _warehouseContext = warehouseContext;
     }
+
+    private void CheckSupplier(Supplier supplier)
+    {
+        if (supplier == null)
+            throw new ArgumentException($"Supplier does not exist");
+    }
     
     public async Task<Supplier> GetSupplier(long supplierId)
     {
         var supplier = _warehouseContext.Suppliers.FirstOrDefault(s => s.Id == supplierId);
 
-        if (supplier == null)
-        {
-            throw new ArgumentException($"Supplier with Id {supplierId} does not exist");
-        }
+        CheckSupplier(supplier);
 
         return supplier;
     }
@@ -42,10 +45,7 @@ public class SupplierService : ISupplierService
     {
         var supplierToUpdate = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == id);
 
-        if (supplierToUpdate == null)
-        {
-            throw new ArgumentException($"Supplier with Id {id} does not exist");
-        }
+        CheckSupplier(supplierToUpdate);
 
         supplierToUpdate.Name = supplier.Name;
         supplierToUpdate.Description = supplier.Description;
@@ -59,10 +59,7 @@ public class SupplierService : ISupplierService
     {
         var supplierToDelete = await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == id);
 
-        if (supplierToDelete == null)
-        {
-            throw new ArgumentException($"Supplier with Id {id} does not exist");
-        }
+        CheckSupplier(supplierToDelete);
 
         _warehouseContext.Suppliers.Remove(supplierToDelete);
 
