@@ -12,16 +12,17 @@ public class LocationService : ILocationService
         _warehouseContext = warehouseContext;
     }
 
+    private void CheckLocation(Location location)
+    {
+        if (location == null)
+            throw new ArgumentException($"Location does not exist");
+    }
+
     public async Task<Location> GetLocation(long locationId)
     {
         var location = await _warehouseContext.Locations
             .FirstOrDefaultAsync(l => l.Id == locationId);
-
-        if (location == null)
-        {
-            throw new ArgumentException($"Location with Id {locationId} does not exist");
-        }
-
+        CheckLocation(location);
         return location;
     }
 
@@ -42,10 +43,7 @@ public class LocationService : ILocationService
         var locationToUpdate = await _warehouseContext.Locations
             .FirstOrDefaultAsync(l => l.Id == id);
 
-        if (locationToUpdate == null)
-        {
-            throw new ArgumentException($"Location with Id {id} does not exist");
-        }
+        CheckLocation(locationToUpdate);
 
         locationToUpdate.LocationCode = updatedLocation.LocationCode;
         locationToUpdate.Notes = updatedLocation.Notes;
@@ -58,10 +56,7 @@ public class LocationService : ILocationService
         var locationToDelete = await _warehouseContext.Locations
             .FirstOrDefaultAsync(l => l.Id == id);
 
-        if (locationToDelete == null)
-        {
-            throw new ArgumentException($"Location with Id {id} does not exist");
-        }
+        CheckLocation(locationToDelete);
 
         _warehouseContext.Locations.Remove(locationToDelete);
         await _warehouseContext.SaveChangesAsync();
