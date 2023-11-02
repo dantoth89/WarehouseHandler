@@ -14,6 +14,12 @@ namespace Warehouse.Services
             _warehouseContext = warehouseContext;
         }
 
+        private void CheckInventory(Inventory inventory)
+        {
+            if (inventory == null)
+                throw new ArgumentException($"Inventory does not exist");
+        }
+
         public async Task<Inventory> GetInventory(long inventoryId)
         {
             var inventory = await _warehouseContext.Inventories
@@ -22,10 +28,7 @@ namespace Warehouse.Services
             inventory.Product.Supplier =
                 await _warehouseContext.Suppliers.FirstOrDefaultAsync(s => s.Id == inventory.Product.SupplierId);
 
-            if (inventory == null)
-            {
-                throw new ArgumentException($"Inventory with Id {inventoryId} does not exist");
-            }
+            CheckInventory(inventory);
 
             return inventory;
         }
@@ -62,10 +65,7 @@ namespace Warehouse.Services
         {
             var inventoryToUpdate = await _warehouseContext.Inventories.FirstOrDefaultAsync(i => i.Id == id);
 
-            if (inventoryToUpdate == null)
-            {
-                throw new ArgumentException($"Inventory with Id {id} does not exist");
-            }
+            CheckInventory(inventoryToUpdate);
 
             inventoryToUpdate.LocationId = updatedInventory.LocationId;
             inventoryToUpdate.Quantity = updatedInventory.Quantity;
