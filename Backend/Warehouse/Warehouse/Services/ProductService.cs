@@ -13,16 +13,18 @@ namespace Warehouse.Services
         {
             _warehouseContext = warehouseContext;
         }
+
+        private void CheckProduct(Product product)
+        {
+            if (product == null)
+                throw new ArgumentException($"Product does not exist");
+        }
         
         public async Task<Product> GetProduct(long productId)
         {
             var product = await _warehouseContext.Products
                 .FirstOrDefaultAsync(p => p.Id == productId);
-
-            if (product == null)
-            {
-                throw new ArgumentException($"Product with Id {productId} does not exist");
-            }
+            CheckProduct(product);
 
             return product;
         }
@@ -57,10 +59,7 @@ namespace Warehouse.Services
         {
             var productToUpdate = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
 
-            if (productToUpdate == null)
-            {
-                throw new ArgumentException($"Product with Id {id} does not exist");
-            }
+            CheckProduct(productToUpdate);
 
             productToUpdate.Name = updatedProduct.Name;
             productToUpdate.SKU = updatedProduct.SKU;
@@ -73,10 +72,7 @@ namespace Warehouse.Services
         {
             var productToDelete = await _warehouseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
 
-            if (productToDelete == null)
-            {
-                throw new ArgumentException($"Product with Id {id} does not exist");
-            }
+            CheckProduct(productToDelete);
 
             _warehouseContext.Products.Remove(productToDelete);
             await _warehouseContext.SaveChangesAsync();
