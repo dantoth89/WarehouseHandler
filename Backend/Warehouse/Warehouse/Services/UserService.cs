@@ -17,21 +17,23 @@ public class UserService : IUserService
         _warehouseContext = warehouseContext;
     }
 
+    private void CheckUser(User user)
+    {
+        if (user == null)
+            throw new ArgumentException($"User does not exist");
+    }
+
     public async Task<User> GetUser(long userId)
     {
         var user = _warehouseContext.Users.FirstOrDefault(u => u.Id == userId);
-
-        if (user == null)
-        {
-            throw new ArgumentException($"User with Id {userId} does not exist");
-        }
-
+        CheckUser(user);
         return user;
     }
 
     public async Task<User> GetUserByUsername(string name)
     {
         var user = _warehouseContext.Users.FirstOrDefault(u => u.Username == name);
+        CheckUser(user);
         return user;
     }
 
@@ -63,11 +65,8 @@ public class UserService : IUserService
     {
         var userToUpdate = await _warehouseContext.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-        if (userToUpdate == null)
-        {
-            throw new ArgumentException($"User with Id {id} does not exist");
-        }
-     
+        CheckUser(userToUpdate);
+
         userToUpdate.Username = updatedUser.Username;
         userToUpdate.Password = Hash(updatedUser.Password, userToUpdate.Salt);
         userToUpdate.Role = updatedUser.Role;
@@ -79,11 +78,8 @@ public class UserService : IUserService
     {
         var userToDelete = await _warehouseContext.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-        if (userToDelete == null)
-        {
-            throw new ArgumentException($"User with Id {id} does not exist");
-        }
-
+        CheckUser(userToDelete);
+        
         _warehouseContext.Users.Remove(userToDelete);
 
         await _warehouseContext.SaveChangesAsync();
@@ -120,10 +116,7 @@ public class UserService : IUserService
     {
         var user = _warehouseContext.Users.FirstOrDefault(u => u.Username == username);
 
-        if (user == null)
-        {
-            return null;
-        }
+        CheckUser(user);
 
         bool isPasswordValid = CheckPassword(password, user);
         
