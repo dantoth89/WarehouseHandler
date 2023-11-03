@@ -57,7 +57,6 @@ function OrderAdd() {
             body: JSON.stringify(orderData),
         })
             .then((res) => {
-                console.log(orderData);
                 if (res.status === 200) {
                     alert('Order created successfully');
                     window.location.href = '/orders';

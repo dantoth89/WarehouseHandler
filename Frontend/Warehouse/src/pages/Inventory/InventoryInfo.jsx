@@ -99,7 +99,6 @@ function InventoryInfo() {
             body: JSON.stringify(updatedInventory),
         })
             .then((res) => {
-                console.log(updatedInventory)
                 if (!res.ok) {
                     throw new Error(`HTTP status ${res.status}`);
                 }

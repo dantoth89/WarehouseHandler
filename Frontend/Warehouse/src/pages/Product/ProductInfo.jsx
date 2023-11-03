@@ -27,7 +27,6 @@ function ProductUpdate() {
             .then((res) => res.json())
             .then((data) => {
                 setUpdatedProduct(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error(error);
